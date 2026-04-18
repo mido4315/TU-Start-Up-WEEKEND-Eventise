@@ -610,8 +610,20 @@ export function EventWizardPage() {
         </Card>
 
         <div className="space-y-6">
-          <Card title="Regelwerk" eyebrow="Rules Engine">
-            <div className="space-y-3 text-sm text-slate-700">
+          <details className="group rounded-3xl border border-white/70 bg-white/80 shadow-panel backdrop-blur">
+            <summary className="flex cursor-pointer list-none items-center justify-between p-5">
+              <div>
+                <p className="mb-1 text-xs font-semibold uppercase tracking-[0.24em] text-brand-700/70">
+                  Rules Engine
+                </p>
+                <h2 className="section-title text-xl font-semibold text-slate-900">Regelwerk</h2>
+              </div>
+              <span className="ml-3 shrink-0 rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-500 transition group-open:bg-slate-100">
+                <span className="group-open:hidden">Einblenden</span>
+                <span className="hidden group-open:inline">Ausblenden</span>
+              </span>
+            </summary>
+            <div className="space-y-3 px-5 pb-5 text-sm text-slate-700">
               {[
                 'Musik = ja → GEMA-Lizenz + ggf. Beschallungskonzept',
                 'Alkohol = ja → Schankerlaubnis erforderlich',
@@ -634,7 +646,7 @@ export function EventWizardPage() {
                 </div>
               ))}
             </div>
-          </Card>
+          </details>
 
           {step >= 4 && (
             <Card

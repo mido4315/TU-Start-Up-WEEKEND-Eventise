@@ -1,4 +1,7 @@
 import { Link } from 'react-router-dom'
+import { BlockerList } from '../components/BlockerList'
+import { DeadlineList } from '../components/DeadlineList'
+import { EmptyState } from '../components/EmptyState'
 import { EventCard } from '../components/EventCard'
 import { MetricCard } from '../components/MetricCard'
 import { PageHeader } from '../components/PageHeader'
@@ -10,151 +13,104 @@ export function HomePage() {
   const requirements = useEventStore((state) => state.requirements)
   const documents = useEventStore((state) => state.documents)
 
-  const averageReadiness =
-    events.length === 0
-      ? 0
-      : Math.round(
-          events.reduce((total, event) => {
-            const progress = buildEventProgress(
-              requirements.filter((item) => item.eventId === event.id),
-              documents.filter((item) => item.eventId === event.id),
-            )
-
-            return total + progress.readiness
-          }, 0) / events.length,
-        )
-
-  const totalBlockers = events.reduce((total, event) => {
-    const progress = buildEventProgress(
-      requirements.filter((item) => item.eventId === event.id),
-      documents.filter((item) => item.eventId === event.id),
+  const eventsWithProgress = [...events]
+    .map((event) => ({
+      event,
+      progress: buildEventProgress(
+        requirements.filter((item) => item.eventId === event.id),
+        documents.filter((item) => item.eventId === event.id),
+      ),
+    }))
+    .sort(
+      (left, right) =>
+        new Date(left.event.date).getTime() - new Date(right.event.date).getTime(),
     )
 
-    return total + progress.blockers.length
-  }, 0)
+  const averageReadiness =
+    eventsWithProgress.length === 0
+      ? 0
+      : Math.round(
+          eventsWithProgress.reduce((total, { progress }) => total + progress.readiness, 0) /
+            eventsWithProgress.length,
+        )
 
-  const featuredEvents = [...events]
-    .sort((left, right) => new Date(left.date).getTime() - new Date(right.date).getTime())
-    .slice(0, 2)
+  const upcomingDeadlines = eventsWithProgress
+    .flatMap(({ event, progress }) =>
+      progress.upcomingDeadlines.map((item) => ({ ...item, eventName: event.name })),
+    )
+    .sort((left, right) => new Date(left.dueDate).getTime() - new Date(right.dueDate).getTime())
+    .slice(0, 6)
+
+  const blockers = eventsWithProgress.flatMap(({ event, progress }) =>
+    progress.blockers.map((blocker) => ({
+      ...blocker,
+      detail: `${event.name}: ${blocker.detail}`,
+    })),
+  )
 
   return (
     <div className="space-y-8">
       <PageHeader
-        eyebrow="Eventise MVP"
-        title="Leitstelle für lokale Veranstaltungsorganisation"
-        description="Genehmigungen, Logistik, Anbieter, Personal, Unterlagen und Bereitschaft an einem Ort planen – ohne Backend."
+        eyebrow="Eventise"
+        title="Alle Veranstaltungen auf einen Blick"
+        description="Bereitschaft, Blocker, Fristen und nächste Schritte – Genehmigungen, Anbieter, Personal und Unterlagen an einem Ort."
         actions={
-          <div className="flex flex-wrap gap-3">
-            <Link
-              className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
-              to="/events/new"
-            >
-              Veranstaltung anlegen
-            </Link>
-            <Link
-              className="rounded-full border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-brand-300 hover:bg-brand-50"
-              to="/dashboard"
-            >
-              Dashboard öffnen
-            </Link>
-          </div>
+          <Link
+            className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+            to="/events/new"
+          >
+            Neue Veranstaltung
+          </Link>
         }
       />
 
       <div className="grid gap-4 md:grid-cols-3">
         <MetricCard
-          detail="Gespeicherte Veranstaltungen, sofort im Workspace verfügbar."
-          label="Erfasste Veranstaltungen"
+          detail="Gespeicherte Veranstaltungen im Workspace."
+          label="Veranstaltungen"
           value={String(events.length)}
         />
         <MetricCard
-          detail="Durchschnittlicher Fortschritt über Anforderungen und Dokumente."
+          detail="Durchschnittlicher Fortschritt über Checkliste und Dokumente."
           label="Durchschn. Bereitschaft"
           value={`${averageReadiness}%`}
         />
         <MetricCard
-          detail="Offene Blocker über aktuelle Beispieldaten und neue Veranstaltungen."
+          detail="Offene Blocker, die noch Nachverfolgung erfordern."
           label="Aktive Blocker"
-          value={String(totalBlockers)}
+          value={String(blockers.length)}
         />
       </div>
 
-      <section className="grid gap-6 lg:grid-cols-[1.4fr,0.9fr]">
-        <div className="rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-panel backdrop-blur">
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700/80">
-            Was dieses MVP abdeckt
-          </p>
-          <div className="mt-4 grid gap-4 md:grid-cols-2">
-            {[
-              'Veranstaltungen mit geführtem Assistenten anlegen.',
-              'Genehmigungs- und Logistik-Anforderungen automatisch generieren.',
-              'Bereitschaft, Blocker, Fristen und Kategorie-Fortschritt verfolgen.',
-              'Unterlagen verwalten und mit Checklisten-Einträgen verknüpfen.',
-            ].map((item) => (
-              <div
-                key={item}
-                className="rounded-3xl border border-slate-100 bg-slate-50/80 p-4 text-sm text-slate-700"
-              >
-                {item}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="rounded-[2rem] border border-brand-100 bg-brand-50/80 p-6 shadow-panel">
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700/80">
-            Typische Herausforderungen
-          </p>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {[
-              'Genehmigungen',
-              'Veranstaltungsorte',
-              'Anbieter',
-              'Personal',
-              'Zeitplanung',
-              'Logistik',
-              'Budget',
-              'Ticketing',
-              'Sicherheit',
-              'Versicherung',
-              'Marketing',
-            ].map((item) => (
-              <span
-                key={item}
-                className="rounded-full border border-brand-200 bg-white px-3 py-2 text-sm text-slate-700"
-              >
-                {item}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div className="mb-4 flex items-center justify-between gap-3">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700/80">
-              Beispiel-Veranstaltungen
-            </p>
-            <h2 className="section-title mt-2 text-2xl font-semibold text-slate-950">
-              Direkt mit Beispieldaten arbeiten
-            </h2>
-          </div>
-        </div>
-
-        <div className="grid gap-4 xl:grid-cols-2">
-          {featuredEvents.map((event) => (
-            <EventCard
-              key={event.id}
-              event={event}
-              progress={buildEventProgress(
-                requirements.filter((item) => item.eventId === event.id),
-                documents.filter((item) => item.eventId === event.id),
-              )}
+      <div className="grid gap-6 xl:grid-cols-[1.35fr,0.95fr]">
+        <section className="space-y-4">
+          {eventsWithProgress.length === 0 ? (
+            <EmptyState
+              title="Noch keine Veranstaltungen"
+              description="Erste Veranstaltung anlegen, um Anforderungen, Fristen und Dokumenten-Tracking zu generieren."
+              action={
+                <Link
+                  className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+                  to="/events/new"
+                >
+                  Veranstaltung anlegen
+                </Link>
+              }
             />
-          ))}
+          ) : (
+            <div className="grid gap-4 xl:grid-cols-2">
+              {eventsWithProgress.map(({ event, progress }) => (
+                <EventCard key={event.id} event={event} progress={progress} />
+              ))}
+            </div>
+          )}
+        </section>
+
+        <div className="space-y-6">
+          <DeadlineList items={upcomingDeadlines} />
+          <BlockerList blockers={blockers} />
         </div>
-      </section>
+      </div>
     </div>
   )
 }

@@ -6,10 +6,11 @@
 
 :root {
   font-family: 'DM Sans', 'Segoe UI', sans-serif;
-  color: #20301f;
+  color: #1d2f1b;
   background:
-    radial-gradient(circle at top left, rgba(188, 209, 162, 0.5), transparent 30%),
-    linear-gradient(180deg, #f6f8f1 0%, #f9f7f2 55%, #eff3e8 100%);
+    radial-gradient(ellipse at top left, rgba(212, 83, 25, 0.08), transparent 35%),
+    radial-gradient(ellipse at bottom right, rgba(114, 188, 90, 0.12), transparent 40%),
+    linear-gradient(180deg, #f3f7f2 0%, #f8f6f3 55%, #eef4ec 100%);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -52,8 +53,8 @@ textarea {
 
 .panel-grid {
   background-image:
-    linear-gradient(rgba(98, 119, 73, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(98, 119, 73, 0.08) 1px, transparent 1px);
+    linear-gradient(rgba(50, 77, 46, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(50, 77, 46, 0.07) 1px, transparent 1px);
   background-position: -1px -1px;
   background-size: 28px 28px;
 }

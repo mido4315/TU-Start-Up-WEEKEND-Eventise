@@ -1,7 +1,6 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { Layout } from './components/Layout'
 import { ChecklistPage } from './pages/ChecklistPage'
-import { DashboardPage } from './pages/DashboardPage'
 import { DocumentsPage } from './pages/DocumentsPage'
 import { EventWizardPage } from './pages/EventWizardPage'
 import { EventWorkspacePage } from './pages/EventWorkspacePage'
@@ -13,7 +12,7 @@ function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route path="dashboard" element={<DashboardPage />} />
+        <Route path="dashboard" element={<Navigate replace to="/" />} />
         <Route path="events/new" element={<EventWizardPage />} />
         <Route path="events/:id" element={<EventWorkspacePage />} />
         <Route path="events/:id/checklist" element={<ChecklistPage />} />
