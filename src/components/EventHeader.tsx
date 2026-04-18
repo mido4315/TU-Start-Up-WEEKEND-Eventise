@@ -11,15 +11,15 @@ interface EventHeaderProps {
 
 const tabs = [
   { label: 'Workspace', to: '' },
-  { label: 'Checklist', to: 'checklist' },
-  { label: 'Documents', to: 'documents' },
+  { label: 'Checkliste', to: 'checklist' },
+  { label: 'Dokumente', to: 'documents' },
 ]
 
 export function EventHeader({ event, progress }: EventHeaderProps) {
   return (
     <div className="space-y-5">
       <PageHeader
-        eyebrow="Event workspace"
+        eyebrow="Veranstaltungs-Workspace"
         title={event.name}
         description={`${formatDate(event.date)} in ${event.location}`}
       />
@@ -29,7 +29,7 @@ export function EventHeader({ event, progress }: EventHeaderProps) {
           <div className="grid gap-3 text-sm text-slate-600 sm:grid-cols-3">
             <div>
               <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
-                Attendance
+                Teilnehmer
               </p>
               <p className="mt-1 text-lg font-semibold text-slate-950">
                 {event.expectedAttendance}
@@ -37,7 +37,7 @@ export function EventHeader({ event, progress }: EventHeaderProps) {
             </div>
             <div>
               <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
-                Blockers
+                Blocker
               </p>
               <p className="mt-1 text-lg font-semibold text-slate-950">
                 {progress.blockers.length}
@@ -45,17 +45,17 @@ export function EventHeader({ event, progress }: EventHeaderProps) {
             </div>
             <div>
               <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
-                Documents
+                Dokumente
               </p>
               <p className="mt-1 text-lg font-semibold text-slate-950">
-                {progress.uploadedDocuments}/{progress.totalDocuments || 0} uploaded
+                {progress.uploadedDocuments}/{progress.totalDocuments || 0} hochgeladen
               </p>
             </div>
           </div>
 
           <div className="w-full max-w-md">
             <div className="mb-2 flex items-center justify-between gap-3 text-sm text-slate-500">
-              <span>Readiness</span>
+              <span>Bereitschaft</span>
               <span>{progress.readiness}%</span>
             </div>
             <ProgressBar value={progress.readiness} />

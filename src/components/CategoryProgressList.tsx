@@ -11,7 +11,7 @@ export function CategoryProgressList({
   items,
 }: CategoryProgressListProps) {
   return (
-    <Card title="Progress by category" eyebrow="Readiness">
+    <Card title="Fortschritt nach Kategorie" eyebrow="Bereitschaft">
       <div className="space-y-4">
         {items.map((item) => (
           <div key={item.category}>

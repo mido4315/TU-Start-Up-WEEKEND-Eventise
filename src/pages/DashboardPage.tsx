@@ -57,32 +57,32 @@ export function DashboardPage() {
     <div className="space-y-8">
       <PageHeader
         eyebrow="Dashboard"
-        title="Track every event in one place"
-        description="Keep readiness, blockers, deadlines, and quick actions visible for organizers who are juggling permits, vendors, staffing, and documents."
+        title="Alle Veranstaltungen auf einen Blick"
+        description="Bereitschaft, Blocker, Fristen und nächste Schritte für Veranstalter, die Genehmigungen, Anbieter, Personal und Unterlagen koordinieren."
         actions={
           <Link
             className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
             to="/events/new"
           >
-            Create a new event
+            Neue Veranstaltung
           </Link>
         }
       />
 
       <div className="grid gap-4 md:grid-cols-3">
         <MetricCard
-          detail="Events currently stored in the local MVP workspace."
-          label="All events"
+          detail="Veranstaltungen im lokalen MVP-Workspace."
+          label="Alle Veranstaltungen"
           value={String(events.length)}
         />
         <MetricCard
-          detail="Average readiness across all checklist and document work."
-          label="Average readiness"
+          detail="Durchschnittlicher Fortschritt über Checkliste und Dokumente."
+          label="Durchschn. Bereitschaft"
           value={`${averageReadiness}%`}
         />
         <MetricCard
-          detail="Current blockers that need organizer or external follow-up."
-          label="Blockers"
+          detail="Offene Blocker, die noch Nachverfolgung erfordern."
+          label="Blocker"
           value={String(blockers.length)}
         />
       </div>
@@ -91,14 +91,14 @@ export function DashboardPage() {
         <section className="space-y-4">
           {eventsWithProgress.length === 0 ? (
             <EmptyState
-              title="No events yet"
-              description="Create your first event to generate requirements, deadlines, and document tracking."
+              title="Noch keine Veranstaltungen"
+              description="Erste Veranstaltung anlegen, um Anforderungen, Fristen und Dokumenten-Tracking zu generieren."
               action={
                 <Link
                   className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
                   to="/events/new"
                 >
-                  Create event
+                  Veranstaltung anlegen
                 </Link>
               }
             />

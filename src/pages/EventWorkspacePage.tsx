@@ -16,14 +16,14 @@ export function EventWorkspacePage() {
   if (!event) {
     return (
       <EmptyState
-        title="Event not found"
-        description="The workspace you requested does not exist in the local store."
+        title="Veranstaltung nicht gefunden"
+        description="Der angeforderte Workspace existiert nicht im lokalen Speicher."
         action={
           <Link
             className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
             to="/dashboard"
           >
-            Back to dashboard
+            Zum Dashboard
           </Link>
         }
       />
@@ -36,23 +36,23 @@ export function EventWorkspacePage() {
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <MetricCard
-          detail="Requirements and documents completed so far."
-          label="Readiness"
+          detail="Anforderungen und Dokumente bisher erledigt."
+          label="Bereitschaft"
           value={`${progress.readiness}%`}
         />
         <MetricCard
-          detail="Requirements marked complete."
-          label="Checklist progress"
+          detail="Als erledigt markierte Anforderungen."
+          label="Checklisten-Fortschritt"
           value={`${progress.completedRequirements}/${progress.totalRequirements}`}
         />
         <MetricCard
-          detail="Documents uploaded into the workspace."
-          label="Documents"
+          detail="In den Workspace hochgeladene Dokumente."
+          label="Dokumente"
           value={`${progress.uploadedDocuments}/${progress.totalDocuments || 0}`}
         />
         <MetricCard
-          detail="Open blockers that still need resolution."
-          label="Blockers"
+          detail="Offene Blocker, die noch gelöst werden müssen."
+          label="Blocker"
           value={String(progress.blockers.length)}
         />
       </div>
@@ -61,16 +61,16 @@ export function EventWorkspacePage() {
         <div className="space-y-6">
           <div className="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-panel backdrop-blur">
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700/80">
-              Event summary
+              Veranstaltungsübersicht
             </p>
             <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {[
-                ['Public space', formatBooleanValue(event.publicSpace)],
-                ['Music', formatBooleanValue(event.music)],
-                ['Alcohol', formatBooleanValue(event.alcohol)],
-                ['Food vendors', formatBooleanValue(event.foodVendors)],
-                ['Funding needed', formatBooleanValue(event.fundingNeeded)],
-                ['Expected attendance', String(event.expectedAttendance)],
+                ['Öffentliche Fläche', formatBooleanValue(event.publicSpace)],
+                ['Musik', formatBooleanValue(event.music)],
+                ['Alkohol', formatBooleanValue(event.alcohol)],
+                ['Stände', formatBooleanValue(event.foodVendors)],
+                ['Förderung', formatBooleanValue(event.fundingNeeded)],
+                ['Teilnehmer', String(event.expectedAttendance)],
               ].map(([label, value]) => (
                 <div
                   key={label}
@@ -86,7 +86,7 @@ export function EventWorkspacePage() {
           </div>
 
           <CategoryProgressList items={progress.categoryProgress} />
-          <DeadlineList items={progress.upcomingDeadlines} title="Upcoming deadlines for this event" />
+          <DeadlineList items={progress.upcomingDeadlines} title="Anstehende Fristen für diese Veranstaltung" />
         </div>
 
         <div className="space-y-6">
@@ -97,23 +97,23 @@ export function EventWorkspacePage() {
             <div className="flex items-center justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700/80">
-                  Recent documents
+                  Aktuelle Dokumente
                 </p>
                 <h2 className="section-title mt-2 text-xl font-semibold text-slate-950">
-                  Workspace files
+                  Workspace-Dateien
                 </h2>
               </div>
               <Link
                 className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-brand-300 hover:bg-brand-50"
                 to={`/events/${event.id}/documents`}
               >
-                Manage
+                Verwalten
               </Link>
             </div>
 
             <div className="mt-4 space-y-3">
               {documents.length === 0 ? (
-                <p className="text-sm text-slate-500">No documents added yet.</p>
+                <p className="text-sm text-slate-500">Noch keine Dokumente hinzugefügt.</p>
               ) : (
                 documents.slice(0, 3).map((document) => (
                   <div

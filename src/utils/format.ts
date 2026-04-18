@@ -1,8 +1,8 @@
 import type { DocumentStatus, RequirementStatus } from '../types/event'
 
-const dateFormatter = new Intl.DateTimeFormat('en-US', {
-  month: 'short',
+const dateFormatter = new Intl.DateTimeFormat('de-DE', {
   day: 'numeric',
+  month: 'long',
   year: 'numeric',
 })
 
@@ -15,7 +15,7 @@ export function formatDate(value: string) {
 }
 
 export function formatBooleanValue(value: boolean) {
-  return value ? 'Yes' : 'No'
+  return value ? 'Ja' : 'Nein'
 }
 
 export function formatRequirementStatus(status: RequirementStatus) {
@@ -42,15 +42,15 @@ export function formatRelativeDate(value: string) {
   const diffDays = Math.round((targetUtc - todayUtc) / 86400000)
 
   if (diffDays === 0) {
-    return 'Due today'
+    return 'Heute fällig'
   }
 
   if (diffDays > 0) {
-    return `Due in ${diffDays} day${diffDays === 1 ? '' : 's'}`
+    return `Fällig in ${diffDays} Tag${diffDays === 1 ? '' : 'en'}`
   }
 
   const overdue = Math.abs(diffDays)
-  return `${overdue} day${overdue === 1 ? '' : 's'} overdue`
+  return `${overdue} Tag${overdue === 1 ? '' : 'e'} überfällig`
 }
 
 export function slugify(value: string) {

@@ -41,21 +41,21 @@ export function HomePage() {
     <div className="space-y-8">
       <PageHeader
         eyebrow="Eventise MVP"
-        title="A practical control room for local event organizers"
-        description="Plan permits, logistics, vendors, staffing, documents, and readiness in one place without waiting for a backend."
+        title="Leitstelle für lokale Veranstaltungsorganisation"
+        description="Genehmigungen, Logistik, Anbieter, Personal, Unterlagen und Bereitschaft an einem Ort planen – ohne Backend."
         actions={
           <div className="flex flex-wrap gap-3">
             <Link
               className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
               to="/events/new"
             >
-              Create event
+              Veranstaltung anlegen
             </Link>
             <Link
               className="rounded-full border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-brand-300 hover:bg-brand-50"
               to="/dashboard"
             >
-              Open dashboard
+              Dashboard öffnen
             </Link>
           </div>
         }
@@ -63,18 +63,18 @@ export function HomePage() {
 
       <div className="grid gap-4 md:grid-cols-3">
         <MetricCard
-          detail="Saved events available immediately across the workspace."
-          label="Tracked events"
+          detail="Gespeicherte Veranstaltungen, sofort im Workspace verfügbar."
+          label="Erfasste Veranstaltungen"
           value={String(events.length)}
         />
         <MetricCard
-          detail="Average completion across requirements and uploaded documents."
-          label="Average readiness"
+          detail="Durchschnittlicher Fortschritt über Anforderungen und Dokumente."
+          label="Durchschn. Bereitschaft"
           value={`${averageReadiness}%`}
         />
         <MetricCard
-          detail="Open blockers across current sample data and any events you create."
-          label="Active blockers"
+          detail="Offene Blocker über aktuelle Beispieldaten und neue Veranstaltungen."
+          label="Aktive Blocker"
           value={String(totalBlockers)}
         />
       </div>
@@ -82,14 +82,14 @@ export function HomePage() {
       <section className="grid gap-6 lg:grid-cols-[1.4fr,0.9fr]">
         <div className="rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-panel backdrop-blur">
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700/80">
-            What this MVP covers
+            Was dieses MVP abdeckt
           </p>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
             {[
-              'Create events with a guided intake wizard.',
-              'Generate permit and logistics requirements from reusable rules.',
-              'Track readiness, blockers, deadlines, and category progress.',
-              'Manage documents and link them to checklist items.',
+              'Veranstaltungen mit geführtem Assistenten anlegen.',
+              'Genehmigungs- und Logistik-Anforderungen automatisch generieren.',
+              'Bereitschaft, Blocker, Fristen und Kategorie-Fortschritt verfolgen.',
+              'Unterlagen verwalten und mit Checklisten-Einträgen verknüpfen.',
             ].map((item) => (
               <div
                 key={item}
@@ -103,20 +103,20 @@ export function HomePage() {
 
         <div className="rounded-[2rem] border border-brand-100 bg-brand-50/80 p-6 shadow-panel">
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700/80">
-            Organizer pain points
+            Typische Herausforderungen
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
             {[
-              'Permits',
-              'Venues',
-              'Vendors',
-              'Staffing',
-              'Scheduling',
-              'Logistics',
-              'Budgeting',
-              'Ticket revenue',
-              'Security',
-              'Insurance',
+              'Genehmigungen',
+              'Veranstaltungsorte',
+              'Anbieter',
+              'Personal',
+              'Zeitplanung',
+              'Logistik',
+              'Budget',
+              'Ticketing',
+              'Sicherheit',
+              'Versicherung',
               'Marketing',
             ].map((item) => (
               <span
@@ -134,10 +134,10 @@ export function HomePage() {
         <div className="mb-4 flex items-center justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700/80">
-              Sample events
+              Beispiel-Veranstaltungen
             </p>
             <h2 className="section-title mt-2 text-2xl font-semibold text-slate-950">
-              Jump straight into working data
+              Direkt mit Beispieldaten arbeiten
             </h2>
           </div>
         </div>

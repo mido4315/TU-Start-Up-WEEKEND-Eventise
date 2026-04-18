@@ -16,14 +16,14 @@ export function ChecklistPage() {
   if (!event) {
     return (
       <EmptyState
-        title="Event not found"
-        description="The checklist you requested does not exist in the local store."
+        title="Veranstaltung nicht gefunden"
+        description="Die angeforderte Checkliste existiert nicht im lokalen Speicher."
         action={
           <Link
             className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
             to="/dashboard"
           >
-            Back to dashboard
+            Zum Dashboard
           </Link>
         }
       />
@@ -43,14 +43,14 @@ export function ChecklistPage() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700/80">
-              Checklist
+              Checkliste
             </p>
             <h2 className="section-title mt-2 text-2xl font-semibold text-slate-950">
-              Generated requirements
+              Generierte Anforderungen
             </h2>
           </div>
           <p className="text-sm text-slate-600">
-            Update statuses and notes as work moves from planning to completion.
+            Status und Notizen aktualisieren, während die Arbeit von Planung zur Umsetzung fortschreitet.
           </p>
         </div>
       </div>

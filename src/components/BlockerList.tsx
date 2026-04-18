@@ -10,14 +10,14 @@ interface BlockerListProps {
 
 export function BlockerList({
   blockers,
-  title = 'Current blockers',
+  title = 'Aktuelle Blocker',
 }: BlockerListProps) {
   return (
-    <Card title={title} eyebrow="Risks">
+    <Card title={title} eyebrow="Risiken">
       {blockers.length === 0 ? (
         <EmptyState
-          title="No blockers right now"
-          description="The event has no active blockers based on its current requirements and documents."
+          title="Keine Blocker vorhanden"
+          description="Die Veranstaltung hat keine aktiven Blocker auf Basis der aktuellen Anforderungen und Dokumente."
         />
       ) : (
         <div className="space-y-3">

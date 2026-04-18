@@ -46,11 +46,12 @@ export const useEventStore = create<EventState>()(
       requirements: seedRequirements,
       documents: seedDocuments,
       createEvent: (values) => {
+        const now = new Date().toISOString()
         const event: Event = {
           id: crypto.randomUUID(),
           ...values,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
+          createdAt: now,
+          updatedAt: now,
         }
 
         const generatedRequirements = generateRequirements(event)

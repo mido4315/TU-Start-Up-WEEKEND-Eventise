@@ -3,30 +3,56 @@ import { generateRequirements } from '../utils/rulesEngine'
 
 const riversideEvent: Event = {
   id: 'event-riverside-summer-market',
-  name: 'Riverside Summer Market',
+  name: 'Sommermarkt am Phoenixsee',
   date: '2026-06-14T10:00:00.000Z',
-  location: 'Riverside Promenade, Berlin',
+  location: 'Phoenixsee-Promenade, Dortmund',
   expectedAttendance: 420,
   publicSpace: true,
+  venueType: 'public',
+  streetClosure: false,
+  noParking: true,
+  transitImpact: false,
+  affectedTransitLines: '',
+  procession: false,
+  processionRoute: '',
   music: true,
   alcohol: false,
   foodVendors: true,
   fundingNeeded: false,
+  flyingStructures: false,
+  highRisk: false,
+  feeZone: 'zone_2',
+  usageType: 'food_drink_stand',
+  usageAreaSqm: 120,
+  usageDays: 2,
   createdAt: '2026-03-01T10:00:00.000Z',
   updatedAt: '2026-04-10T15:30:00.000Z',
 }
 
 const studentEvent: Event = {
   id: 'event-student-night-street-festival',
-  name: 'Student Night Street Festival',
+  name: 'Studenten-Straßenfest Nacht',
   date: '2026-07-05T16:00:00.000Z',
-  location: 'Campus Square and West Street, Potsdam',
+  location: 'Campus Süd & Weststraße, Dortmund',
   expectedAttendance: 950,
   publicSpace: true,
+  venueType: 'public',
+  streetClosure: true,
+  noParking: true,
+  transitImpact: true,
+  affectedTransitLines: 'U42, Bus 440',
+  procession: false,
+  processionRoute: '',
   music: true,
   alcohol: true,
   foodVendors: true,
   fundingNeeded: true,
+  flyingStructures: true,
+  highRisk: false,
+  feeZone: 'zone_1',
+  usageType: 'food_drink_stand',
+  usageAreaSqm: 250,
+  usageDays: 1,
   createdAt: '2026-03-08T09:15:00.000Z',
   updatedAt: '2026-04-14T11:20:00.000Z',
 }
@@ -45,90 +71,90 @@ export const seedEvents: Event[] = [riversideEvent, studentEvent]
 
 export const seedRequirements: Requirement[] = [
   ...applyRequirementOverrides(generateRequirements(riversideEvent), {
-    'Confirm venue logistics': {
+    'Veranstaltungsort bestätigen': {
       status: 'completed',
-      notes: 'Signed access agreement with the promenade office.',
+      notes: 'Zugangsvereinbarung mit dem Promenaden-Büro unterzeichnet.',
     },
-    'Build budget and hidden cost review': {
+    'Budget & versteckte Kosten prüfen': {
       status: 'in_progress',
-      notes: 'Cleanup quote still pending from city contractor.',
+      notes: 'Reinigungsangebot vom städtischen Auftragnehmer ausstehend.',
     },
-    'Create staffing plan': {
+    'Personalplanung erstellen': {
       status: 'in_progress',
-      notes: 'Volunteer shifts assigned, lead roles still open.',
+      notes: 'Schichten zugewiesen, Leitungspositionen noch offen.',
     },
-    'Review insurance coverage': {
+    'Versicherungsschutz prüfen': {
       status: 'completed',
-      notes: 'Broker confirmed public liability extension.',
+      notes: 'Makler hat Erweiterung der Haftpflicht bestätigt.',
     },
-    'Launch marketing plan': {
+    'Marketingplan starten': {
       status: 'completed',
-      notes: 'Community newsletter and poster pack are live.',
+      notes: 'Newsletter und Plakatpaket sind live.',
     },
-    'Prepare event-day run of show': {
+    'Ablaufplan Veranstaltungstag vorbereiten': {
       status: 'waiting',
-      notes: 'Waiting on final vendor arrival windows.',
+      notes: 'Warte auf finale Ankunftszeiten der Anbieter.',
     },
-    'Request city or Ordnungsamt approval': {
+    'Genehmigung Ordnungsamt / Stadt einholen': {
       status: 'in_progress',
-      notes: 'Initial application submitted, site map requested.',
+      notes: 'Erstantrag eingereicht, Lageplan angefordert.',
     },
-    'Obtain GEMA music license': {
+    'GEMA-Musiklizenz beantragen': {
       status: 'completed',
-      notes: 'Application filed with the final playlist estimate.',
+      notes: 'Antrag mit finaler Playlist-Schätzung eingereicht.',
     },
-    'Coordinate food vendors': {
+    'Standanbieter koordinieren': {
       status: 'in_progress',
-      notes: 'Vendor power plan under review.',
+      notes: 'Stromanschlussplan in Prüfung.',
     },
   }),
   ...applyRequirementOverrides(generateRequirements(studentEvent), {
-    'Confirm venue logistics': {
+    'Veranstaltungsort bestätigen': {
       status: 'waiting',
-      notes: 'Campus security has not approved the closure map yet.',
+      notes: 'Campus-Sicherheit hat Sperrplan noch nicht genehmigt.',
     },
-    'Build budget and hidden cost review': {
+    'Budget & versteckte Kosten prüfen': {
       status: 'not_started',
-      notes: 'Still missing waste, fencing, and generator quotes.',
+      notes: 'Angebote für Entsorgung, Absperrung und Generatoren fehlen.',
     },
-    'Create staffing plan': {
+    'Personalplanung erstellen': {
       status: 'not_started',
-      notes: 'No stage manager or volunteer coordinator assigned.',
+      notes: 'Kein Bühnenmeister oder Freiwilligenkoordinator zugewiesen.',
     },
-    'Launch marketing plan': {
+    'Marketingplan starten': {
       status: 'not_started',
-      notes: 'Promotion is blocked until funding is clearer.',
+      notes: 'Werbung blockiert bis Finanzierung geklärt.',
     },
-    'Review insurance coverage': {
+    'Versicherungsschutz prüfen': {
       status: 'waiting',
-      notes: 'Broker requested the current site risk assessment.',
+      notes: 'Makler hat aktuelle Gefährdungsbeurteilung angefordert.',
     },
-    'Prepare event-day run of show': {
+    'Ablaufplan Veranstaltungstag vorbereiten': {
       status: 'not_started',
-      notes: 'Timeline depends on permit approvals.',
+      notes: 'Zeitplan hängt von Genehmigungen ab.',
     },
-    'Obtain GEMA music license': {
+    'GEMA-Musiklizenz beantragen': {
       status: 'not_started',
     },
-    'Secure alcohol permit': {
+    'Schankerlaubnis beantragen': {
       status: 'not_started',
-      notes: 'Organizer still needs a licensed serving partner.',
+      notes: 'Veranstalter benötigt noch einen konzessionierten Ausschankpartner.',
     },
-    'Request city or Ordnungsamt approval': {
+    'Genehmigung Ordnungsamt / Stadt einholen': {
       status: 'waiting',
-      notes: 'Street closure concept needs revision.',
+      notes: 'Straßensperrungskonzept muss überarbeitet werden.',
     },
-    'Prepare security plan': {
+    'Sicherheitskonzept erstellen': {
       status: 'not_started',
-      notes: 'Expected attendance triggers mandatory planning.',
+      notes: 'Teilnehmerzahl erfordert verpflichtende Planung.',
     },
-    'Submit funding application': {
+    'Förderantrag einreichen': {
       status: 'in_progress',
-      notes: 'Deck drafted, budget annex still missing.',
+      notes: 'Präsentation entworfen, Budgetanlage fehlt noch.',
     },
-    'Coordinate food vendors': {
+    'Standanbieter koordinieren': {
       status: 'not_started',
-      notes: 'No shortlist or vendor onboarding pack yet.',
+      notes: 'Keine Shortlist oder Onboarding-Unterlagen vorhanden.',
     },
   }),
 ]
@@ -137,61 +163,61 @@ export const seedDocuments: EventDocument[] = [
   {
     id: 'doc-riverside-site-plan',
     eventId: riversideEvent.id,
-    title: 'Site plan',
-    type: 'Operations',
+    title: 'Lageplan',
+    type: 'Betrieb',
     status: 'uploaded',
-    notes: 'Annotated access points and stall footprints uploaded.',
+    notes: 'Zugänge und Standflächen eingezeichnet.',
     linkedRequirementIds: [
-      `${riversideEvent.id}-confirm-venue-logistics`,
-      `${riversideEvent.id}-request-city-or-ordnungsamt-approval`,
+      `${riversideEvent.id}-veranstaltungsort-best-tigen`,
+      `${riversideEvent.id}-genehmigung-ordnungsamt-stadt-einholen`,
     ],
   },
   {
     id: 'doc-riverside-insurance',
     eventId: riversideEvent.id,
-    title: 'Insurance certificate',
-    type: 'Compliance',
+    title: 'Versicherungsnachweis',
+    type: 'Genehmigungen',
     status: 'uploaded',
-    notes: 'Valid through the event weekend.',
-    linkedRequirementIds: [`${riversideEvent.id}-review-insurance-coverage`],
+    notes: 'Gültig über das Veranstaltungswochenende.',
+    linkedRequirementIds: [`${riversideEvent.id}-versicherungsschutz-pr-fen`],
   },
   {
     id: 'doc-riverside-music-list',
     eventId: riversideEvent.id,
-    title: 'Music list',
-    type: 'Program',
+    title: 'Musikliste',
+    type: 'Programm',
     status: 'pending',
-    notes: 'Band manager will confirm the final set order next week.',
-    linkedRequirementIds: [`${riversideEvent.id}-obtain-gema-music-license`],
+    notes: 'Bandmanager bestätigt finale Setlist nächste Woche.',
+    linkedRequirementIds: [`${riversideEvent.id}-gema-musiklizenz-beantragen`],
   },
   {
     id: 'doc-student-site-plan',
     eventId: studentEvent.id,
-    title: 'Site plan',
-    type: 'Operations',
+    title: 'Lageplan',
+    type: 'Betrieb',
     status: 'missing',
-    notes: 'Required by the city before permit review continues.',
+    notes: 'Von der Stadt vor Genehmigungsprüfung gefordert.',
     linkedRequirementIds: [
-      `${studentEvent.id}-confirm-venue-logistics`,
-      `${studentEvent.id}-request-city-or-ordnungsamt-approval`,
+      `${studentEvent.id}-veranstaltungsort-best-tigen`,
+      `${studentEvent.id}-genehmigung-ordnungsamt-stadt-einholen`,
     ],
   },
   {
     id: 'doc-student-permit-form',
     eventId: studentEvent.id,
-    title: 'Permit form',
-    type: 'Permits',
+    title: 'Genehmigungsantrag',
+    type: 'Genehmigungen',
     status: 'pending',
-    notes: 'Basic organizer details are filled, attachments still missing.',
-    linkedRequirementIds: [`${studentEvent.id}-request-city-or-ordnungsamt-approval`],
+    notes: 'Veranstalterdaten ausgefüllt, Anlagen fehlen noch.',
+    linkedRequirementIds: [`${studentEvent.id}-genehmigung-ordnungsamt-stadt-einholen`],
   },
   {
     id: 'doc-student-insurance',
     eventId: studentEvent.id,
-    title: 'Insurance certificate',
-    type: 'Compliance',
+    title: 'Versicherungsnachweis',
+    type: 'Genehmigungen',
     status: 'missing',
-    notes: 'Pending confirmation from the student union broker.',
-    linkedRequirementIds: [`${studentEvent.id}-review-insurance-coverage`],
+    notes: 'Bestätigung vom Makler der Studierendenschaft ausstehend.',
+    linkedRequirementIds: [`${studentEvent.id}-versicherungsschutz-pr-fen`],
   },
 ]

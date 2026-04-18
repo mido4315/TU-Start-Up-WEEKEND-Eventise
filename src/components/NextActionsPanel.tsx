@@ -15,20 +15,20 @@ export function NextActionsPanel({
 }: NextActionsPanelProps) {
   return (
     <Card
-      title="Next actions"
-      eyebrow="Execution"
+      title="Nächste Schritte"
+      eyebrow="Umsetzung"
       action={
         <Link
           className="rounded-full border border-brand-200 px-4 py-2 text-sm font-semibold text-brand-800 transition hover:border-brand-400 hover:bg-brand-50"
           to={`/events/${eventId}/checklist`}
         >
-          Open checklist
+          Checkliste öffnen
         </Link>
       }
     >
       {actions.length === 0 ? (
         <p className="text-sm text-slate-500">
-          Everything requiring action is complete for now.
+          Alle offenen Punkte sind derzeit erledigt.
         </p>
       ) : (
         <div className="space-y-3">
@@ -39,10 +39,10 @@ export function NextActionsPanel({
             >
               <div className="flex flex-wrap items-center gap-2">
                 <h3 className="font-semibold text-slate-900">{item.title}</h3>
-                <StatusBadge label="Action needed" tone="warning" />
+                <StatusBadge label="Handlung erforderlich" tone="warning" />
               </div>
               <p className="mt-2 text-sm text-slate-600">
-                Due {formatDate(item.dueDate)}
+                Fällig {formatDate(item.dueDate)}
               </p>
             </article>
           ))}

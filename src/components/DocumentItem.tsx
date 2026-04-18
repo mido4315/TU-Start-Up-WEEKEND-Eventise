@@ -59,18 +59,18 @@ export function DocumentItem({
         </div>
 
         <label className="text-sm font-medium text-slate-600">
-          Notes
+          Notizen
           <textarea
             className="mt-2 min-h-24 w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-slate-900 outline-none transition focus:border-brand-500 focus:bg-white"
             defaultValue={document.notes}
             onBlur={(event) => onNotesChange(event.target.value)}
-            placeholder="Keep track of upload status, owner, or missing details..."
+            placeholder="Upload-Status, Zuständigkeit oder fehlende Details vermerken…"
           />
         </label>
 
         <details className="rounded-2xl border border-slate-100 bg-slate-50/70 p-4">
           <summary className="cursor-pointer text-sm font-semibold text-slate-900">
-            Linked requirements ({document.linkedRequirementIds.length})
+            Verknüpfte Anforderungen ({document.linkedRequirementIds.length})
           </summary>
           <div className="mt-3 grid gap-2 md:grid-cols-2">
             {requirements.map((requirement) => {

@@ -15,6 +15,7 @@ const categoryOrder: RequirementCategory[] = [
   'vendors',
   'security',
   'marketing',
+  'documents',
 ]
 
 function sortByDueDate(items: Requirement[]) {
@@ -56,8 +57,8 @@ function buildBlockers(
       title: item.title,
       detail:
         item.status === 'waiting'
-          ? 'Waiting on external follow-up before this can move forward.'
-          : 'Organizer action is still needed on this requirement.',
+          ? 'Wartet auf externe Rückmeldung, bevor es weitergehen kann.'
+          : 'Veranstalter-Handlung für diese Anforderung noch erforderlich.',
     }))
 
   const documentBlockers = documents
@@ -65,7 +66,7 @@ function buildBlockers(
     .map((item) => ({
       id: item.id,
       title: item.title,
-      detail: 'A required document is marked missing.',
+      detail: 'Ein erforderliches Dokument ist als fehlend markiert.',
     }))
 
   return [...requirementBlockers, ...documentBlockers]

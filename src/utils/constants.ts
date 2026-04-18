@@ -18,13 +18,14 @@ export const documentStatusOptions: DocumentStatus[] = [
 ]
 
 export const categoryLabels: Record<RequirementCategory, string> = {
-  permits: 'Permits',
-  operations: 'Operations',
-  staffing: 'Staffing',
+  permits: 'Genehmigungen',
+  operations: 'Betrieb & Logistik',
+  staffing: 'Personal',
   budget: 'Budget',
-  vendors: 'Vendors',
-  security: 'Security',
+  vendors: 'Stände & Anbieter',
+  security: 'Sicherheit',
   marketing: 'Marketing',
+  documents: 'Unterlagen',
 }
 
 export const badgeTones = {

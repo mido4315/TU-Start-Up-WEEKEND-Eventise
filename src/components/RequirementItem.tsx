@@ -30,11 +30,11 @@ export function RequirementItem({
               </h3>
               <StatusBadge label={categoryLabels[requirement.category]} tone="info" />
               {requirement.actionRequired && (
-                <StatusBadge label="User action" tone="warning" />
+                <StatusBadge label="Handlung nötig" tone="warning" />
               )}
             </div>
             <p className="mt-2 text-sm text-slate-600">
-              Due {formatDate(requirement.dueDate)} · {formatRelativeDate(requirement.dueDate)}
+              Fällig {formatDate(requirement.dueDate)} · {formatRelativeDate(requirement.dueDate)}
             </p>
           </div>
 
@@ -57,12 +57,12 @@ export function RequirementItem({
         </div>
 
         <label className="text-sm font-medium text-slate-600">
-          Notes
+          Notizen
           <textarea
             className="mt-2 min-h-24 w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-slate-900 outline-none transition focus:border-brand-500 focus:bg-white"
             defaultValue={requirement.notes}
             onBlur={(event) => onNotesChange(event.target.value)}
-            placeholder="Capture follow-ups, contacts, or waiting reasons..."
+            placeholder="Folgeschritte, Ansprechpartner oder Wartegründe notieren…"
           />
         </label>
       </div>

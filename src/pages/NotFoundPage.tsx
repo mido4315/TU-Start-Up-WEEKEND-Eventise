@@ -4,14 +4,14 @@ import { EmptyState } from '../components/EmptyState'
 export function NotFoundPage() {
   return (
     <EmptyState
-      title="Page not found"
-      description="That route is not part of the Eventise MVP."
+      title="Seite nicht gefunden"
+      description="Diese Route ist nicht Teil des Eventise MVP."
       action={
         <Link
           className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
           to="/dashboard"
         >
-          Open dashboard
+          Dashboard öffnen
         </Link>
       }
     />

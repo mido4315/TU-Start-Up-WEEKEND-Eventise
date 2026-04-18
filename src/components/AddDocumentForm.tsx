@@ -31,26 +31,26 @@ export function AddDocumentForm({
     >
       <div className="grid gap-4 md:grid-cols-2">
         <label className="text-sm font-medium text-slate-700">
-          Document title
+          Dokumenttitel
           <input
             className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500"
             onChange={(event) =>
               setForm((current) => ({ ...current, title: event.target.value }))
             }
-            placeholder="Site plan"
+            placeholder="Lageplan"
             required
             value={form.title}
           />
         </label>
 
         <label className="text-sm font-medium text-slate-700">
-          Type
+          Typ
           <input
             className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500"
             onChange={(event) =>
               setForm((current) => ({ ...current, type: event.target.value }))
             }
-            placeholder="Compliance"
+            placeholder="Genehmigungen"
             required
             value={form.type}
           />
@@ -77,20 +77,20 @@ export function AddDocumentForm({
         </label>
 
         <label className="text-sm font-medium text-slate-700">
-          Notes
+          Notizen
           <textarea
             className="mt-2 min-h-24 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500"
             onChange={(event) =>
               setForm((current) => ({ ...current, notes: event.target.value }))
             }
-            placeholder="What is included, who owns it, and what is still missing?"
+            placeholder="Was ist enthalten, wer ist zuständig, was fehlt noch?"
             value={form.notes}
           />
         </label>
       </div>
 
       <div>
-        <p className="text-sm font-medium text-slate-700">Link to requirements</p>
+        <p className="text-sm font-medium text-slate-700">Mit Anforderungen verknüpfen</p>
         <div className="mt-3 grid gap-2 md:grid-cols-2">
           {requirements.map((requirement) => {
             const checked = form.linkedRequirementIds.includes(requirement.id)
@@ -126,7 +126,7 @@ export function AddDocumentForm({
         className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
         type="submit"
       >
-        Add document
+        Dokument hinzufügen
       </button>
     </form>
   )

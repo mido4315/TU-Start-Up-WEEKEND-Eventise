@@ -8,13 +8,13 @@ interface DeadlineListProps {
 }
 
 export function DeadlineList({
-  title = 'Upcoming deadlines',
+  title = 'Anstehende Fristen',
   items,
 }: DeadlineListProps) {
   return (
-    <Card title={title} eyebrow="Timeline">
+    <Card title={title} eyebrow="Zeitplan">
       {items.length === 0 ? (
-        <p className="text-sm text-slate-500">No upcoming deadlines to show yet.</p>
+        <p className="text-sm text-slate-500">Noch keine anstehenden Fristen.</p>
       ) : (
         <div className="space-y-3">
           {items.map((item) => (

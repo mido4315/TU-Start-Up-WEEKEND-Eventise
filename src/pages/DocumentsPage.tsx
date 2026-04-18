@@ -17,14 +17,14 @@ export function DocumentsPage() {
   if (!event) {
     return (
       <EmptyState
-        title="Event not found"
-        description="The documents workspace you requested does not exist in the local store."
+        title="Veranstaltung nicht gefunden"
+        description="Der angeforderte Dokumenten-Workspace existiert nicht im lokalen Speicher."
         action={
           <Link
             className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
             to="/dashboard"
           >
-            Back to dashboard
+            Zum Dashboard
           </Link>
         }
       />
@@ -38,13 +38,13 @@ export function DocumentsPage() {
       <div className="grid gap-6 xl:grid-cols-[0.95fr,1.05fr]">
         <div className="rounded-3xl border border-white/70 bg-white/80 p-5 shadow-panel backdrop-blur">
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700/80">
-            Add document
+            Dokument hinzufügen
           </p>
           <h2 className="section-title mt-2 text-2xl font-semibold text-slate-950">
-            Keep evidence attached to the work
+            Nachweise zur Arbeit zuordnen
           </h2>
           <p className="mt-2 text-sm text-slate-600">
-            Add mock files, mark them uploaded or missing, and connect them back to the checklist items they support.
+            Dateien anlegen, als hochgeladen oder fehlend markieren und mit den zugehörigen Checklisten-Einträgen verknüpfen.
           </p>
 
           <div className="mt-5">
@@ -58,8 +58,8 @@ export function DocumentsPage() {
         <div className="space-y-4">
           {documents.length === 0 ? (
             <EmptyState
-              title="No documents yet"
-              description="Add the first document to start tying permits, insurance, plans, and other files to event requirements."
+              title="Noch keine Dokumente"
+              description="Erstes Dokument hinzufügen, um Genehmigungen, Versicherungen, Pläne und weitere Dateien mit Anforderungen zu verknüpfen."
             />
           ) : (
             documents.map((document) => (
