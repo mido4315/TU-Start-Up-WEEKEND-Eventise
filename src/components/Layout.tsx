@@ -13,8 +13,8 @@ export function Layout() {
 
   return (
     <div className="app-shell panel-grid">
-      <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col lg:flex-row">
-        <aside className="border-b border-white/60 bg-slate-950 px-6 py-6 text-white lg:min-h-screen lg:w-72 lg:border-b-0 lg:border-r lg:border-white/10">
+      <div className="flex min-h-screen w-full max-w-[1800px] flex-col lg:flex-row">
+        <aside className="border-b border-brand-900/30 bg-brand-800 px-5 py-6 text-white lg:min-h-screen lg:w-64 lg:border-b-0 lg:border-r lg:border-brand-900/30">
           <Link className="inline-block" to="/">
             <p className="text-sm uppercase tracking-[0.28em] text-brand-200/80">
               Eventise
@@ -26,7 +26,7 @@ export function Layout() {
             Keep permits, logistics, services, documents, and progress in one place.
           </p>
 
-          <div className="mt-8 rounded-3xl border border-white/10 bg-white/5 p-4">
+          <div className="mt-8 rounded-3xl border border-brand-200/20 bg-brand-200/10 p-4">
             <p className="text-xs uppercase tracking-[0.24em] text-slate-400">
               Workspace status
             </p>
