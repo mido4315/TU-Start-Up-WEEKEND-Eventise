@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import { useLanguage } from '../i18n/useLanguage'
 import type { Event, EventProgress } from '../types/event'
 import { formatDate } from '../utils/format'
 import { PageHeader } from './PageHeader'
@@ -9,19 +10,22 @@ interface EventHeaderProps {
   progress: EventProgress
 }
 
-const tabs = [
-  { label: 'Workspace', to: '' },
-  { label: 'Checkliste', to: 'checklist' },
-  { label: 'Dokumente', to: 'documents' },
-]
-
 export function EventHeader({ event, progress }: EventHeaderProps) {
+  const { language } = useLanguage()
+  const isGerman = language === 'de'
+
+  const tabs = [
+    { label: isGerman ? 'Workspace' : 'Workspace', to: '' },
+    { label: isGerman ? 'Checkliste' : 'Checklist', to: 'checklist' },
+    { label: isGerman ? 'Dokumente' : 'Documents', to: 'documents' },
+  ]
+
   return (
     <div className="space-y-5">
       <PageHeader
-        eyebrow="Veranstaltungs-Workspace"
+        eyebrow={isGerman ? 'Veranstaltungs-Workspace' : 'Event workspace'}
         title={event.name}
-        description={`${formatDate(event.date)} in ${event.location}`}
+        description={`${formatDate(event.date, language)} ${isGerman ? 'in' : 'in'} ${event.location}`}
       />
 
       <div className="rounded-3xl border border-white/70 bg-white/75 p-5 shadow-panel backdrop-blur">
@@ -29,7 +33,7 @@ export function EventHeader({ event, progress }: EventHeaderProps) {
           <div className="grid gap-3 text-sm text-slate-600 sm:grid-cols-3">
             <div>
               <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
-                Teilnehmer
+                {isGerman ? 'Teilnehmer' : 'Attendance'}
               </p>
               <p className="mt-1 text-lg font-semibold text-slate-950">
                 {event.expectedAttendance}
@@ -37,7 +41,7 @@ export function EventHeader({ event, progress }: EventHeaderProps) {
             </div>
             <div>
               <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
-                Blocker
+                {isGerman ? 'Blocker' : 'Blockers'}
               </p>
               <p className="mt-1 text-lg font-semibold text-slate-950">
                 {progress.blockers.length}
@@ -45,17 +49,18 @@ export function EventHeader({ event, progress }: EventHeaderProps) {
             </div>
             <div>
               <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
-                Dokumente
+                {isGerman ? 'Dokumente' : 'Documents'}
               </p>
               <p className="mt-1 text-lg font-semibold text-slate-950">
-                {progress.uploadedDocuments}/{progress.totalDocuments || 0} hochgeladen
+                {progress.uploadedDocuments}/{progress.totalDocuments || 0}{' '}
+                {isGerman ? 'hochgeladen' : 'uploaded'}
               </p>
             </div>
           </div>
 
           <div className="w-full max-w-md">
             <div className="mb-2 flex items-center justify-between gap-3 text-sm text-slate-500">
-              <span>Bereitschaft</span>
+              <span>{isGerman ? 'Bereitschaft' : 'Readiness'}</span>
               <span>{progress.readiness}%</span>
             </div>
             <ProgressBar value={progress.readiness} />

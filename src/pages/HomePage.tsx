@@ -5,6 +5,7 @@ import { EmptyState } from '../components/EmptyState'
 import { EventCard } from '../components/EventCard'
 import { MetricCard } from '../components/MetricCard'
 import { PageHeader } from '../components/PageHeader'
+import { useLanguage } from '../i18n/useLanguage'
 import { useEventStore } from '../store/useEventStore'
 import { buildEventProgress } from '../utils/eventProgress'
 
@@ -12,6 +13,8 @@ export function HomePage() {
   const events = useEventStore((state) => state.events)
   const requirements = useEventStore((state) => state.requirements)
   const documents = useEventStore((state) => state.documents)
+  const { language } = useLanguage()
+  const isGerman = language === 'de'
 
   const eventsWithProgress = [...events]
     .map((event) => ({
@@ -19,6 +22,7 @@ export function HomePage() {
       progress: buildEventProgress(
         requirements.filter((item) => item.eventId === event.id),
         documents.filter((item) => item.eventId === event.id),
+        language,
       ),
     }))
     .sort(
@@ -52,32 +56,50 @@ export function HomePage() {
     <div className="space-y-8">
       <PageHeader
         eyebrow="Eventise"
-        title="Alle Veranstaltungen auf einen Blick"
-        description="Bereitschaft, Blocker, Fristen und nächste Schritte – Genehmigungen, Anbieter, Personal und Unterlagen an einem Ort."
+        title={
+          isGerman ? 'Alle Veranstaltungen auf einen Blick' : 'All events in one place'
+        }
+        description={
+          isGerman
+            ? 'Bereitschaft, Blocker, Fristen und nächste Schritte – Genehmigungen, Anbieter, Personal und Unterlagen an einem Ort.'
+            : 'Readiness, blockers, deadlines, and next steps – permits, vendors, staffing, and documents in one place.'
+        }
         actions={
           <Link
             className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
             to="/events/new"
           >
-            Neue Veranstaltung
+            {isGerman ? 'Neue Veranstaltung' : 'New event'}
           </Link>
         }
       />
 
       <div className="grid gap-4 md:grid-cols-3">
         <MetricCard
-          detail="Gespeicherte Veranstaltungen im Workspace."
-          label="Veranstaltungen"
+          detail={
+            isGerman
+              ? 'Gespeicherte Veranstaltungen im Workspace.'
+              : 'Saved events in the workspace.'
+          }
+          label={isGerman ? 'Veranstaltungen' : 'Events'}
           value={String(events.length)}
         />
         <MetricCard
-          detail="Durchschnittlicher Fortschritt über Checkliste und Dokumente."
-          label="Durchschn. Bereitschaft"
+          detail={
+            isGerman
+              ? 'Durchschnittlicher Fortschritt über Checkliste und Dokumente.'
+              : 'Average progress across checklist and documents.'
+          }
+          label={isGerman ? 'Durchschn. Bereitschaft' : 'Avg. readiness'}
           value={`${averageReadiness}%`}
         />
         <MetricCard
-          detail="Offene Blocker, die noch Nachverfolgung erfordern."
-          label="Aktive Blocker"
+          detail={
+            isGerman
+              ? 'Offene Blocker, die noch Nachverfolgung erfordern.'
+              : 'Open blockers that still need follow-up.'
+          }
+          label={isGerman ? 'Aktive Blocker' : 'Active blockers'}
           value={String(blockers.length)}
         />
       </div>
@@ -86,14 +108,18 @@ export function HomePage() {
         <section className="space-y-4">
           {eventsWithProgress.length === 0 ? (
             <EmptyState
-              title="Noch keine Veranstaltungen"
-              description="Erste Veranstaltung anlegen, um Anforderungen, Fristen und Dokumenten-Tracking zu generieren."
+              title={isGerman ? 'Noch keine Veranstaltungen' : 'No events yet'}
+              description={
+                isGerman
+                  ? 'Erste Veranstaltung anlegen, um Anforderungen, Fristen und Dokumenten-Tracking zu generieren.'
+                  : 'Create your first event to generate requirements, deadlines, and document tracking.'
+              }
               action={
                 <Link
                   className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
                   to="/events/new"
                 >
-                  Veranstaltung anlegen
+                  {isGerman ? 'Veranstaltung anlegen' : 'Create event'}
                 </Link>
               }
             />

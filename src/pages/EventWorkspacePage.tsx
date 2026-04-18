@@ -6,24 +6,31 @@ import { EmptyState } from '../components/EmptyState'
 import { EventHeader } from '../components/EventHeader'
 import { MetricCard } from '../components/MetricCard'
 import { NextActionsPanel } from '../components/NextActionsPanel'
+import { useLanguage } from '../i18n/useLanguage'
 import { useEventWorkspace } from '../hooks/useEventWorkspace'
 import { formatBooleanValue } from '../utils/format'
 
 export function EventWorkspacePage() {
   const { id } = useParams()
   const { event, documents, progress } = useEventWorkspace(id)
+  const { language } = useLanguage()
+  const isGerman = language === 'de'
 
   if (!event) {
     return (
       <EmptyState
-        title="Veranstaltung nicht gefunden"
-        description="Der angeforderte Workspace existiert nicht im lokalen Speicher."
+        title={isGerman ? 'Veranstaltung nicht gefunden' : 'Event not found'}
+        description={
+          isGerman
+            ? 'Der angeforderte Workspace existiert nicht im lokalen Speicher.'
+            : 'The requested workspace does not exist in local storage.'
+        }
         action={
           <Link
             className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
             to="/dashboard"
           >
-            Zum Dashboard
+            {isGerman ? 'Zum Dashboard' : 'Back to dashboard'}
           </Link>
         }
       />
@@ -36,23 +43,39 @@ export function EventWorkspacePage() {
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <MetricCard
-          detail="Anforderungen und Dokumente bisher erledigt."
-          label="Bereitschaft"
+          detail={
+            isGerman
+              ? 'Anforderungen und Dokumente bisher erledigt.'
+              : 'Requirements and documents completed so far.'
+          }
+          label={isGerman ? 'Bereitschaft' : 'Readiness'}
           value={`${progress.readiness}%`}
         />
         <MetricCard
-          detail="Als erledigt markierte Anforderungen."
-          label="Checklisten-Fortschritt"
+          detail={
+            isGerman
+              ? 'Als erledigt markierte Anforderungen.'
+              : 'Requirements marked as completed.'
+          }
+          label={isGerman ? 'Checklisten-Fortschritt' : 'Checklist progress'}
           value={`${progress.completedRequirements}/${progress.totalRequirements}`}
         />
         <MetricCard
-          detail="In den Workspace hochgeladene Dokumente."
-          label="Dokumente"
+          detail={
+            isGerman
+              ? 'In den Workspace hochgeladene Dokumente.'
+              : 'Documents uploaded to the workspace.'
+          }
+          label={isGerman ? 'Dokumente' : 'Documents'}
           value={`${progress.uploadedDocuments}/${progress.totalDocuments || 0}`}
         />
         <MetricCard
-          detail="Offene Blocker, die noch gelöst werden müssen."
-          label="Blocker"
+          detail={
+            isGerman
+              ? 'Offene Blocker, die noch gelöst werden müssen.'
+              : 'Open blockers that still need to be resolved.'
+          }
+          label={isGerman ? 'Blocker' : 'Blockers'}
           value={String(progress.blockers.length)}
         />
       </div>
@@ -61,16 +84,16 @@ export function EventWorkspacePage() {
         <div className="space-y-6">
           <div className="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-panel backdrop-blur">
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700/80">
-              Veranstaltungsübersicht
+              {isGerman ? 'Veranstaltungsübersicht' : 'Event summary'}
             </p>
             <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {[
-                ['Öffentliche Fläche', formatBooleanValue(event.publicSpace)],
-                ['Musik', formatBooleanValue(event.music)],
-                ['Alkohol', formatBooleanValue(event.alcohol)],
-                ['Stände', formatBooleanValue(event.foodVendors)],
-                ['Förderung', formatBooleanValue(event.fundingNeeded)],
-                ['Teilnehmer', String(event.expectedAttendance)],
+                [isGerman ? 'Öffentliche Fläche' : 'Public space', formatBooleanValue(event.publicSpace, language)],
+                [isGerman ? 'Musik' : 'Music', formatBooleanValue(event.music, language)],
+                [isGerman ? 'Alkohol' : 'Alcohol', formatBooleanValue(event.alcohol, language)],
+                [isGerman ? 'Stände' : 'Vendors', formatBooleanValue(event.foodVendors, language)],
+                [isGerman ? 'Förderung' : 'Funding', formatBooleanValue(event.fundingNeeded, language)],
+                [isGerman ? 'Teilnehmer' : 'Attendance', String(event.expectedAttendance)],
               ].map(([label, value]) => (
                 <div
                   key={label}
@@ -86,7 +109,14 @@ export function EventWorkspacePage() {
           </div>
 
           <CategoryProgressList items={progress.categoryProgress} />
-          <DeadlineList items={progress.upcomingDeadlines} title="Anstehende Fristen für diese Veranstaltung" />
+          <DeadlineList
+            items={progress.upcomingDeadlines}
+            title={
+              isGerman
+                ? 'Anstehende Fristen für diese Veranstaltung'
+                : 'Upcoming deadlines for this event'
+            }
+          />
         </div>
 
         <div className="space-y-6">
@@ -97,23 +127,25 @@ export function EventWorkspacePage() {
             <div className="flex items-center justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700/80">
-                  Aktuelle Dokumente
+                  {isGerman ? 'Aktuelle Dokumente' : 'Current documents'}
                 </p>
                 <h2 className="section-title mt-2 text-xl font-semibold text-slate-950">
-                  Workspace-Dateien
+                  {isGerman ? 'Workspace-Dateien' : 'Workspace files'}
                 </h2>
               </div>
               <Link
                 className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-brand-300 hover:bg-brand-50"
                 to={`/events/${event.id}/documents`}
               >
-                Verwalten
+                {isGerman ? 'Verwalten' : 'Manage'}
               </Link>
             </div>
 
             <div className="mt-4 space-y-3">
               {documents.length === 0 ? (
-                <p className="text-sm text-slate-500">Noch keine Dokumente hinzugefügt.</p>
+                <p className="text-sm text-slate-500">
+                  {isGerman ? 'Noch keine Dokumente hinzugefügt.' : 'No documents added yet.'}
+                </p>
               ) : (
                 documents.slice(0, 3).map((document) => (
                   <div

@@ -1,3 +1,4 @@
+import { useLanguage } from '../i18n/useLanguage'
 import type { EventBlocker } from '../types/event'
 import { Card } from './Card'
 import { EmptyState } from './EmptyState'
@@ -8,16 +9,23 @@ interface BlockerListProps {
   title?: string
 }
 
-export function BlockerList({
-  blockers,
-  title = 'Aktuelle Blocker',
-}: BlockerListProps) {
+export function BlockerList({ blockers, title }: BlockerListProps) {
+  const { language } = useLanguage()
+  const isGerman = language === 'de'
+
   return (
-    <Card title={title} eyebrow="Risiken">
+    <Card
+      title={title ?? (isGerman ? 'Aktuelle Blocker' : 'Current blockers')}
+      eyebrow={isGerman ? 'Risiken' : 'Risks'}
+    >
       {blockers.length === 0 ? (
         <EmptyState
-          title="Keine Blocker vorhanden"
-          description="Die Veranstaltung hat keine aktiven Blocker auf Basis der aktuellen Anforderungen und Dokumente."
+          title={isGerman ? 'Keine Blocker vorhanden' : 'No blockers right now'}
+          description={
+            isGerman
+              ? 'Die Veranstaltung hat keine aktiven Blocker auf Basis der aktuellen Anforderungen und Dokumente.'
+              : 'This event has no active blockers based on its current requirements and documents.'
+          }
         />
       ) : (
         <div className="space-y-3">
@@ -28,7 +36,7 @@ export function BlockerList({
             >
               <div className="flex flex-wrap items-center gap-2">
                 <h3 className="font-semibold text-slate-900">{blocker.title}</h3>
-                <StatusBadge label="Blocker" tone="danger" />
+                <StatusBadge label={isGerman ? 'Blocker' : 'Blocker'} tone="danger" />
               </div>
               <p className="mt-2 text-sm text-slate-600">{blocker.detail}</p>
             </article>

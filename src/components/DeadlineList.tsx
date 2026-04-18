@@ -1,3 +1,4 @@
+import { useLanguage } from '../i18n/useLanguage'
 import type { Requirement } from '../types/event'
 import { formatDate, formatRelativeDate } from '../utils/format'
 import { Card } from './Card'
@@ -7,14 +8,19 @@ interface DeadlineListProps {
   items: Array<Requirement & { eventName?: string }>
 }
 
-export function DeadlineList({
-  title = 'Anstehende Fristen',
-  items,
-}: DeadlineListProps) {
+export function DeadlineList({ title, items }: DeadlineListProps) {
+  const { language } = useLanguage()
+  const isGerman = language === 'de'
+
   return (
-    <Card title={title} eyebrow="Zeitplan">
+    <Card
+      title={title ?? (isGerman ? 'Anstehende Fristen' : 'Upcoming deadlines')}
+      eyebrow={isGerman ? 'Zeitplan' : 'Timeline'}
+    >
       {items.length === 0 ? (
-        <p className="text-sm text-slate-500">Noch keine anstehenden Fristen.</p>
+        <p className="text-sm text-slate-500">
+          {isGerman ? 'Noch keine anstehenden Fristen.' : 'No upcoming deadlines yet.'}
+        </p>
       ) : (
         <div className="space-y-3">
           {items.map((item) => (
@@ -29,8 +35,8 @@ export function DeadlineList({
                 )}
               </div>
               <div className="text-sm text-slate-600 md:text-right">
-                <p>{formatDate(item.dueDate)}</p>
-                <p>{formatRelativeDate(item.dueDate)}</p>
+                <p>{formatDate(item.dueDate, language)}</p>
+                <p>{formatRelativeDate(item.dueDate, language)}</p>
               </div>
             </div>
           ))}

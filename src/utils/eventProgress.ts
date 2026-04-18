@@ -1,3 +1,4 @@
+import type { AppLanguage } from '../i18n/types'
 import type {
   CategoryProgress,
   EventBlocker,
@@ -49,6 +50,7 @@ function buildCategoryProgress(requirements: Requirement[]): CategoryProgress[] 
 function buildBlockers(
   requirements: Requirement[],
   documents: EventDocument[],
+  language: AppLanguage,
 ): EventBlocker[] {
   const requirementBlockers = requirements
     .filter((item) => item.actionRequired && item.status !== 'completed')
@@ -57,8 +59,12 @@ function buildBlockers(
       title: item.title,
       detail:
         item.status === 'waiting'
-          ? 'Wartet auf externe Rückmeldung, bevor es weitergehen kann.'
-          : 'Veranstalter-Handlung für diese Anforderung noch erforderlich.',
+          ? language === 'de'
+            ? 'Wartet auf externe Rückmeldung, bevor es weitergehen kann.'
+            : 'Waiting on an external update before it can move forward.'
+          : language === 'de'
+            ? 'Veranstalter-Handlung für diese Anforderung noch erforderlich.'
+            : 'Organizer action is still required for this requirement.',
     }))
 
   const documentBlockers = documents
@@ -66,7 +72,10 @@ function buildBlockers(
     .map((item) => ({
       id: item.id,
       title: item.title,
-      detail: 'Ein erforderliches Dokument ist als fehlend markiert.',
+      detail:
+        language === 'de'
+          ? 'Ein erforderliches Dokument ist als fehlend markiert.'
+          : 'A required document is marked as missing.',
     }))
 
   return [...requirementBlockers, ...documentBlockers]
@@ -75,6 +84,7 @@ function buildBlockers(
 export function buildEventProgress(
   requirements: Requirement[],
   documents: EventDocument[],
+  language: AppLanguage = 'de',
 ): EventProgress {
   const completedRequirements = requirements.filter(
     (item) => item.status === 'completed',
@@ -91,7 +101,7 @@ export function buildEventProgress(
     totalRequirements: requirements.length,
     uploadedDocuments,
     totalDocuments: documents.length,
-    blockers: buildBlockers(requirements, documents),
+    blockers: buildBlockers(requirements, documents, language),
     upcomingDeadlines: sortByDueDate(
       requirements.filter((item) => item.status !== 'completed'),
     ).slice(0, 5),

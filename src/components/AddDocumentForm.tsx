@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useLanguage } from '../i18n/useLanguage'
 import type { AddDocumentInput, Requirement } from '../types/event'
 
 interface AddDocumentFormProps {
@@ -19,6 +20,8 @@ export function AddDocumentForm({
   onSubmit,
 }: AddDocumentFormProps) {
   const [form, setForm] = useState<AddDocumentInput>(initialState)
+  const { language } = useLanguage()
+  const isGerman = language === 'de'
 
   return (
     <form
@@ -31,26 +34,26 @@ export function AddDocumentForm({
     >
       <div className="grid gap-4 md:grid-cols-2">
         <label className="text-sm font-medium text-slate-700">
-          Dokumenttitel
+          {isGerman ? 'Dokumenttitel' : 'Document title'}
           <input
             className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500"
             onChange={(event) =>
               setForm((current) => ({ ...current, title: event.target.value }))
             }
-            placeholder="Lageplan"
+            placeholder={isGerman ? 'Lageplan' : 'Site plan'}
             required
             value={form.title}
           />
         </label>
 
         <label className="text-sm font-medium text-slate-700">
-          Typ
+          {isGerman ? 'Typ' : 'Type'}
           <input
             className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500"
             onChange={(event) =>
               setForm((current) => ({ ...current, type: event.target.value }))
             }
-            placeholder="Genehmigungen"
+            placeholder={isGerman ? 'Genehmigungen' : 'Permits'}
             required
             value={form.type}
           />
@@ -59,7 +62,7 @@ export function AddDocumentForm({
 
       <div className="grid gap-4 md:grid-cols-[1fr,2fr]">
         <label className="text-sm font-medium text-slate-700">
-          Status
+          {isGerman ? 'Status' : 'Status'}
           <select
             className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500"
             onChange={(event) =>
@@ -70,27 +73,33 @@ export function AddDocumentForm({
             }
             value={form.status}
           >
-            <option value="pending">pending</option>
-            <option value="uploaded">uploaded</option>
-            <option value="missing">missing</option>
+            <option value="pending">{isGerman ? 'ausstehend' : 'pending'}</option>
+            <option value="uploaded">{isGerman ? 'hochgeladen' : 'uploaded'}</option>
+            <option value="missing">{isGerman ? 'fehlend' : 'missing'}</option>
           </select>
         </label>
 
         <label className="text-sm font-medium text-slate-700">
-          Notizen
+          {isGerman ? 'Notizen' : 'Notes'}
           <textarea
             className="mt-2 min-h-24 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500"
             onChange={(event) =>
               setForm((current) => ({ ...current, notes: event.target.value }))
             }
-            placeholder="Was ist enthalten, wer ist zuständig, was fehlt noch?"
+            placeholder={
+              isGerman
+                ? 'Was ist enthalten, wer ist zuständig, was fehlt noch?'
+                : 'What is included, who owns it, and what is still missing?'
+            }
             value={form.notes}
           />
         </label>
       </div>
 
       <div>
-        <p className="text-sm font-medium text-slate-700">Mit Anforderungen verknüpfen</p>
+        <p className="text-sm font-medium text-slate-700">
+          {isGerman ? 'Mit Anforderungen verknüpfen' : 'Link to requirements'}
+        </p>
         <div className="mt-3 grid gap-2 md:grid-cols-2">
           {requirements.map((requirement) => {
             const checked = form.linkedRequirementIds.includes(requirement.id)
@@ -126,7 +135,7 @@ export function AddDocumentForm({
         className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
         type="submit"
       >
-        Dokument hinzufügen
+        {isGerman ? 'Dokument hinzufügen' : 'Add document'}
       </button>
     </form>
   )

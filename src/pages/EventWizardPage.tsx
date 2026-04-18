@@ -4,7 +4,7 @@ import { Card } from '../components/Card'
 import { PageHeader } from '../components/PageHeader'
 import { getRequiredDocuments } from '../data/documentRequirements'
 import type { EventFormValues, FeeZone, UsageType } from '../types/event'
-import { categoryLabels } from '../utils/constants'
+import { getCategoryLabel } from '../utils/constants'
 import { calculateFee, dortmundContacts, feeRates, feeZoneLabels, usageTypeLabels } from '../utils/fees'
 import { formatDate } from '../utils/format'
 import { generateRequirements } from '../utils/rulesEngine'
@@ -512,7 +512,7 @@ export function EventWizardPage() {
                     >
                       <p className="font-semibold text-slate-900">{item.title}</p>
                       <p className="mt-1 text-sm text-slate-600">
-                        {categoryLabels[item.category]}
+                        {getCategoryLabel(item.category)}
                       </p>
                     </div>
                   ))}

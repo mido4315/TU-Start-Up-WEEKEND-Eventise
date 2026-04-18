@@ -1,3 +1,4 @@
+import { useLanguage } from '../i18n/useLanguage'
 import type { EventDocument, Requirement } from '../types/event'
 import { documentStatusOptions } from '../utils/constants'
 import { formatDocumentStatus } from '../utils/format'
@@ -19,6 +20,9 @@ export function DocumentItem({
   onNotesChange,
   onLinksChange,
 }: DocumentItemProps) {
+  const { language } = useLanguage()
+  const isGerman = language === 'de'
+
   return (
     <Card className="border-slate-100 bg-white/85">
       <div className="flex flex-col gap-4">
@@ -27,7 +31,7 @@ export function DocumentItem({
             <div className="flex flex-wrap items-center gap-2">
               <h3 className="text-lg font-semibold text-slate-950">{document.title}</h3>
               <StatusBadge
-                label={document.status}
+                label={formatDocumentStatus(document.status, language)}
                 tone={
                   document.status === 'uploaded'
                     ? 'success'
@@ -41,7 +45,7 @@ export function DocumentItem({
           </div>
 
           <label className="text-sm font-medium text-slate-600">
-            Status
+            {isGerman ? 'Status' : 'Status'}
             <select
               className="mt-2 block rounded-2xl border border-slate-200 bg-white px-4 py-2 text-slate-900 outline-none transition focus:border-brand-500"
               onChange={(event) =>
@@ -51,7 +55,7 @@ export function DocumentItem({
             >
               {documentStatusOptions.map((status) => (
                 <option key={status} value={status}>
-                  {formatDocumentStatus(status)}
+                  {formatDocumentStatus(status, language)}
                 </option>
               ))}
             </select>
@@ -59,18 +63,23 @@ export function DocumentItem({
         </div>
 
         <label className="text-sm font-medium text-slate-600">
-          Notizen
+          {isGerman ? 'Notizen' : 'Notes'}
           <textarea
             className="mt-2 min-h-24 w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-slate-900 outline-none transition focus:border-brand-500 focus:bg-white"
             defaultValue={document.notes}
             onBlur={(event) => onNotesChange(event.target.value)}
-            placeholder="Upload-Status, Zuständigkeit oder fehlende Details vermerken…"
+            placeholder={
+              isGerman
+                ? 'Upload-Status, Zuständigkeit oder fehlende Details vermerken…'
+                : 'Track upload status, owner, or missing details…'
+            }
           />
         </label>
 
         <details className="rounded-2xl border border-slate-100 bg-slate-50/70 p-4">
           <summary className="cursor-pointer text-sm font-semibold text-slate-900">
-            Verknüpfte Anforderungen ({document.linkedRequirementIds.length})
+            {isGerman ? 'Verknüpfte Anforderungen' : 'Linked requirements'} (
+            {document.linkedRequirementIds.length})
           </summary>
           <div className="mt-3 grid gap-2 md:grid-cols-2">
             {requirements.map((requirement) => {

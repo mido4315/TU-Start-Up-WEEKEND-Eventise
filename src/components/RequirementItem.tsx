@@ -1,5 +1,6 @@
+import { useLanguage } from '../i18n/useLanguage'
 import type { Requirement } from '../types/event'
-import { categoryLabels, requirementStatusOptions } from '../utils/constants'
+import { getCategoryLabel, requirementStatusOptions } from '../utils/constants'
 import {
   formatDate,
   formatRelativeDate,
@@ -19,6 +20,9 @@ export function RequirementItem({
   onStatusChange,
   onNotesChange,
 }: RequirementItemProps) {
+  const { language } = useLanguage()
+  const isGerman = language === 'de'
+
   return (
     <Card className="border-slate-100 bg-white/85">
       <div className="flex flex-col gap-4">
@@ -28,18 +32,25 @@ export function RequirementItem({
               <h3 className="text-lg font-semibold text-slate-950">
                 {requirement.title}
               </h3>
-              <StatusBadge label={categoryLabels[requirement.category]} tone="info" />
+              <StatusBadge
+                label={getCategoryLabel(requirement.category, language)}
+                tone="info"
+              />
               {requirement.actionRequired && (
-                <StatusBadge label="Handlung nötig" tone="warning" />
+                <StatusBadge
+                  label={isGerman ? 'Handlung nötig' : 'User action'}
+                  tone="warning"
+                />
               )}
             </div>
             <p className="mt-2 text-sm text-slate-600">
-              Fällig {formatDate(requirement.dueDate)} · {formatRelativeDate(requirement.dueDate)}
+              {isGerman ? 'Fällig' : 'Due'} {formatDate(requirement.dueDate, language)} ·{' '}
+              {formatRelativeDate(requirement.dueDate, language)}
             </p>
           </div>
 
           <label className="text-sm font-medium text-slate-600">
-            Status
+            {isGerman ? 'Status' : 'Status'}
             <select
               className="mt-2 block rounded-2xl border border-slate-200 bg-white px-4 py-2 text-slate-900 outline-none transition focus:border-brand-500"
               onChange={(event) =>
@@ -49,7 +60,7 @@ export function RequirementItem({
             >
               {requirementStatusOptions.map((status) => (
                 <option key={status} value={status}>
-                  {formatRequirementStatus(status)}
+                  {formatRequirementStatus(status, language)}
                 </option>
               ))}
             </select>
@@ -57,12 +68,16 @@ export function RequirementItem({
         </div>
 
         <label className="text-sm font-medium text-slate-600">
-          Notizen
+          {isGerman ? 'Notizen' : 'Notes'}
           <textarea
             className="mt-2 min-h-24 w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-slate-900 outline-none transition focus:border-brand-500 focus:bg-white"
             defaultValue={requirement.notes}
             onBlur={(event) => onNotesChange(event.target.value)}
-            placeholder="Folgeschritte, Ansprechpartner oder Wartegründe notieren…"
+            placeholder={
+              isGerman
+                ? 'Folgeschritte, Ansprechpartner oder Wartegründe notieren…'
+                : 'Capture follow-ups, owners, or waiting reasons…'
+            }
           />
         </label>
       </div>

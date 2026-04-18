@@ -1,5 +1,6 @@
+import { useLanguage } from '../i18n/useLanguage'
 import type { CategoryProgress } from '../types/event'
-import { categoryLabels } from '../utils/constants'
+import { getCategoryLabel } from '../utils/constants'
 import { Card } from './Card'
 import { ProgressBar } from './ProgressBar'
 
@@ -7,17 +8,21 @@ interface CategoryProgressListProps {
   items: CategoryProgress[]
 }
 
-export function CategoryProgressList({
-  items,
-}: CategoryProgressListProps) {
+export function CategoryProgressList({ items }: CategoryProgressListProps) {
+  const { language } = useLanguage()
+  const isGerman = language === 'de'
+
   return (
-    <Card title="Fortschritt nach Kategorie" eyebrow="Bereitschaft">
+    <Card
+      title={isGerman ? 'Fortschritt nach Kategorie' : 'Progress by category'}
+      eyebrow={isGerman ? 'Bereitschaft' : 'Readiness'}
+    >
       <div className="space-y-4">
         {items.map((item) => (
           <div key={item.category}>
             <div className="mb-2 flex items-center justify-between gap-3">
               <p className="font-medium text-slate-900">
-                {categoryLabels[item.category]}
+                {getCategoryLabel(item.category, language)}
               </p>
               <p className="text-sm text-slate-500">
                 {item.completed}/{item.total}

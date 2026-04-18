@@ -3,6 +3,7 @@ import { AddDocumentForm } from '../components/AddDocumentForm'
 import { DocumentItem } from '../components/DocumentItem'
 import { EmptyState } from '../components/EmptyState'
 import { EventHeader } from '../components/EventHeader'
+import { useLanguage } from '../i18n/useLanguage'
 import { useEventWorkspace } from '../hooks/useEventWorkspace'
 import { useEventStore } from '../store/useEventStore'
 
@@ -13,18 +14,24 @@ export function DocumentsPage() {
   const updateDocumentLinks = useEventStore((state) => state.updateDocumentLinks)
   const updateDocumentNotes = useEventStore((state) => state.updateDocumentNotes)
   const updateDocumentStatus = useEventStore((state) => state.updateDocumentStatus)
+  const { language } = useLanguage()
+  const isGerman = language === 'de'
 
   if (!event) {
     return (
       <EmptyState
-        title="Veranstaltung nicht gefunden"
-        description="Der angeforderte Dokumenten-Workspace existiert nicht im lokalen Speicher."
+        title={isGerman ? 'Veranstaltung nicht gefunden' : 'Event not found'}
+        description={
+          isGerman
+            ? 'Der angeforderte Dokumenten-Workspace existiert nicht im lokalen Speicher.'
+            : 'The requested documents workspace does not exist in local storage.'
+        }
         action={
           <Link
             className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
             to="/dashboard"
           >
-            Zum Dashboard
+            {isGerman ? 'Zum Dashboard' : 'Back to dashboard'}
           </Link>
         }
       />
@@ -38,13 +45,15 @@ export function DocumentsPage() {
       <div className="grid gap-6 xl:grid-cols-[0.95fr,1.05fr]">
         <div className="rounded-3xl border border-white/70 bg-white/80 p-5 shadow-panel backdrop-blur">
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700/80">
-            Dokument hinzufügen
+            {isGerman ? 'Dokument hinzufügen' : 'Add document'}
           </p>
           <h2 className="section-title mt-2 text-2xl font-semibold text-slate-950">
-            Nachweise zur Arbeit zuordnen
+            {isGerman ? 'Nachweise zur Arbeit zuordnen' : 'Attach documents to the work'}
           </h2>
           <p className="mt-2 text-sm text-slate-600">
-            Dateien anlegen, als hochgeladen oder fehlend markieren und mit den zugehörigen Checklisten-Einträgen verknüpfen.
+            {isGerman
+              ? 'Dateien anlegen, als hochgeladen oder fehlend markieren und mit den zugehörigen Checklisten-Einträgen verknüpfen.'
+              : 'Add files, mark them uploaded or missing, and link them to the related checklist items.'}
           </p>
 
           <div className="mt-5">
@@ -58,8 +67,12 @@ export function DocumentsPage() {
         <div className="space-y-4">
           {documents.length === 0 ? (
             <EmptyState
-              title="Noch keine Dokumente"
-              description="Erstes Dokument hinzufügen, um Genehmigungen, Versicherungen, Pläne und weitere Dateien mit Anforderungen zu verknüpfen."
+              title={isGerman ? 'Noch keine Dokumente' : 'No documents yet'}
+              description={
+                isGerman
+                  ? 'Erstes Dokument hinzufügen, um Genehmigungen, Versicherungen, Pläne und weitere Dateien mit Anforderungen zu verknüpfen.'
+                  : 'Add the first document to link permits, insurance, plans, and other files to requirements.'
+              }
             />
           ) : (
             documents.map((document) => (
