@@ -10,11 +10,14 @@ export function Layout() {
   return (
     <div className="app-shell panel-grid">
       <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col lg:flex-row">
-        <aside className="border-b border-white/20 bg-[#1A3526] px-5 py-6 text-white lg:min-h-screen lg:w-60 lg:border-b-0 lg:border-r lg:border-white/10">
-          <Link className="flex flex-col items-center gap-1 text-center" to="/">
+        <aside className="overflow-visible border-b border-white/20 bg-[#1A3526] px-5 py-6 text-white lg:min-h-screen lg:w-64 lg:border-b-0 lg:border-r lg:border-white/10">
+          <Link
+            className="relative left-1/2 flex w-fit -translate-x-1/2 flex-col items-center gap-1 text-center"
+            to="/"
+          >
             <img
               alt="Eventise"
-              className="h-32 w-32 drop-shadow-lg"
+              className="h-80 w-80 max-w-none shrink-0 drop-shadow-lg"
               src="/logo.png"
             />
           </Link>
