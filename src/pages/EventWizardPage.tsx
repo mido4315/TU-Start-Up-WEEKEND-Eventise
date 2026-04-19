@@ -221,20 +221,21 @@ export function EventWizardPage() {
 
               <div className="text-sm font-medium text-slate-700">
                 <p>{t('wizard.organizerFields.address')}</p>
-                <button
-                  className={`${inputClass} flex min-h-[52px] items-center justify-between gap-3 text-left ${
-                    form.organizerAddress ? 'text-slate-900' : 'text-slate-400'
-                  }`}
-                  onClick={() => setMapPickerTarget('organizerAddress')}
-                  type="button"
-                >
-                  <span>
-                    {form.organizerAddress || t('wizard.mapPicker.emptyAddress')}
-                  </span>
-                  <span className="rounded-full bg-brand-100 px-3 py-1 text-xs font-semibold text-brand-800">
+                <div className="mt-2 flex gap-2">
+                  <input
+                    className="min-w-0 flex-1 rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500"
+                    onChange={(e) => update('organizerAddress', e.target.value)}
+                    placeholder={t('wizard.organizerPlaceholders.address')}
+                    value={form.organizerAddress}
+                  />
+                  <button
+                    className="shrink-0 rounded-2xl bg-brand-100 px-4 py-3 text-xs font-semibold text-brand-800 transition hover:bg-brand-200"
+                    onClick={() => setMapPickerTarget('organizerAddress')}
+                    type="button"
+                  >
                     {t('wizard.mapPicker.open')}
-                  </span>
-                </button>
+                  </button>
+                </div>
               </div>
 
               <LabeledInput label={t('wizard.organizerFields.phone')}>
@@ -320,18 +321,22 @@ export function EventWizardPage() {
 
               <div className="text-sm font-medium text-slate-700">
                 <p>{t('wizard.fields.location')}</p>
-                <button
-                  className={`${inputClass} flex min-h-[52px] items-center justify-between gap-3 text-left ${
-                    form.location ? 'text-slate-900' : 'text-slate-400'
-                  }`}
-                  onClick={() => setMapPickerTarget('location')}
-                  type="button"
-                >
-                  <span>{form.location || t('wizard.mapPicker.emptyLocation')}</span>
-                  <span className="rounded-full bg-brand-100 px-3 py-1 text-xs font-semibold text-brand-800">
+                <div className="mt-2 flex gap-2">
+                  <input
+                    className="min-w-0 flex-1 rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500"
+                    onChange={(event) => update('location', event.target.value)}
+                    placeholder={t('wizard.fields.locationPlaceholder')}
+                    required
+                    value={form.location}
+                  />
+                  <button
+                    className="shrink-0 rounded-2xl bg-brand-100 px-4 py-3 text-xs font-semibold text-brand-800 transition hover:bg-brand-200"
+                    onClick={() => setMapPickerTarget('location')}
+                    type="button"
+                  >
                     {t('wizard.mapPicker.open')}
-                  </span>
-                </button>
+                  </button>
+                </div>
               </div>
             </div>
           )}

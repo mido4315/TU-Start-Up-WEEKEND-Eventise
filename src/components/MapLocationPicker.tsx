@@ -1,5 +1,6 @@
 import L from 'leaflet'
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+import { useState } from 'react'
+import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from 'react-leaflet'
 
 interface MockLocation {
   id: string
@@ -20,6 +21,11 @@ interface MapLocationPickerProps {
   title: string
 }
 
+interface ClickSelectionHandlerProps {
+  onSelect: (location: string) => void
+  onSelectedPointChange: (position: [number, number]) => void
+}
+
 const markerIcon = new L.Icon({
   iconAnchor: [12, 41],
   iconRetinaUrl:
@@ -30,6 +36,25 @@ const markerIcon = new L.Icon({
   shadowSize: [41, 41],
   shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 })
+
+function formatMapPoint(lat: number, lng: number) {
+  return `Selected map point: ${lat.toFixed(5)}, ${lng.toFixed(5)}`
+}
+
+function ClickSelectionHandler({
+  onSelect,
+  onSelectedPointChange,
+}: ClickSelectionHandlerProps) {
+  useMapEvents({
+    click(event) {
+      const position: [number, number] = [event.latlng.lat, event.latlng.lng]
+      onSelectedPointChange(position)
+      onSelect(formatMapPoint(event.latlng.lat, event.latlng.lng))
+    },
+  })
+
+  return null
+}
 
 export function MapLocationPicker({
   closeLabel,
@@ -43,6 +68,9 @@ export function MapLocationPicker({
   title,
 }: MapLocationPickerProps) {
   const center: [number, number] = [51.5136, 7.4653]
+  const [selectedPoint, setSelectedPoint] = useState<[number, number] | null>(
+    null,
+  )
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 px-4 py-6 backdrop-blur-sm">
@@ -75,6 +103,10 @@ export function MapLocationPicker({
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
+              <ClickSelectionHandler
+                onSelect={onSelect}
+                onSelectedPointChange={setSelectedPoint}
+              />
               {locations.map((location) => (
                 <Marker
                   icon={markerIcon}
@@ -93,6 +125,11 @@ export function MapLocationPicker({
                   </Popup>
                 </Marker>
               ))}
+              {selectedPoint && (
+                <Marker icon={markerIcon} position={selectedPoint}>
+                  <Popup>{formatMapPoint(selectedPoint[0], selectedPoint[1])}</Popup>
+                </Marker>
+              )}
             </MapContainer>
           </div>
 
