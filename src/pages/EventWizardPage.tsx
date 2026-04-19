@@ -147,22 +147,19 @@ export function EventWizardPage() {
       id: 'A',
       name: t('wizard.mapPicker.locations.marketSquare.name'),
       detail: t('wizard.mapPicker.locations.marketSquare.detail'),
-      x: '46%',
-      y: '47%',
+      position: [51.5147, 7.4653] as [number, number],
     },
     {
       id: 'B',
       name: t('wizard.mapPicker.locations.riversidePark.name'),
       detail: t('wizard.mapPicker.locations.riversidePark.detail'),
-      x: '24%',
-      y: '72%',
+      position: [51.4916, 7.5285] as [number, number],
     },
     {
       id: 'C',
       name: t('wizard.mapPicker.locations.communityHall.name'),
       detail: t('wizard.mapPicker.locations.communityHall.detail'),
-      x: '76%',
-      y: '28%',
+      position: [51.5296, 7.4624] as [number, number],
     },
   ]
 
