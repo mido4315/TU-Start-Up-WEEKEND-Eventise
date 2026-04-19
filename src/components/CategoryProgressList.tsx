@@ -1,4 +1,4 @@
-import { useLanguage } from '../i18n/useLanguage'
+import { useTranslation } from '../i18n/useTranslation'
 import type { CategoryProgress } from '../types/event'
 import { getCategoryLabel } from '../utils/constants'
 import { Card } from './Card'
@@ -9,13 +9,12 @@ interface CategoryProgressListProps {
 }
 
 export function CategoryProgressList({ items }: CategoryProgressListProps) {
-  const { language } = useLanguage()
-  const isGerman = language === 'de'
+  const { language, t } = useTranslation()
 
   return (
     <Card
-      title={isGerman ? 'Fortschritt nach Kategorie' : 'Progress by category'}
-      eyebrow={isGerman ? 'Bereitschaft' : 'Readiness'}
+      title={t('categoryProgress.title')}
+      eyebrow={t('common.readiness')}
     >
       <div className="space-y-4">
         {items.map((item) => (

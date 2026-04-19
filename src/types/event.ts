@@ -37,6 +37,8 @@ export interface Event {
   organizerIdNumber: string
   // Event basics
   name: string
+  firstName: string
+  lastName: string
   date: string
   location: string
   expectedAttendance: number
@@ -117,6 +119,8 @@ export interface EventFormValues {
   organizerIdNumber: string
   // Event basics
   name: string
+  firstName: string
+  lastName: string
   date: string
   location: string
   expectedAttendance: number

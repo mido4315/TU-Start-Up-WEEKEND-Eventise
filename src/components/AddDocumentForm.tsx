@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { useLanguage } from '../i18n/useLanguage'
+import { useTranslation } from '../i18n/useTranslation'
 import type { AddDocumentInput, Requirement } from '../types/event'
+import { getRequirementDisplay } from '../utils/localizedContent'
 
 interface AddDocumentFormProps {
   requirements: Requirement[]
@@ -20,8 +21,7 @@ export function AddDocumentForm({
   onSubmit,
 }: AddDocumentFormProps) {
   const [form, setForm] = useState<AddDocumentInput>(initialState)
-  const { language } = useLanguage()
-  const isGerman = language === 'de'
+  const { language, t } = useTranslation()
 
   return (
     <form
@@ -34,26 +34,26 @@ export function AddDocumentForm({
     >
       <div className="grid gap-4 md:grid-cols-2">
         <label className="text-sm font-medium text-slate-700">
-          {isGerman ? 'Dokumenttitel' : 'Document title'}
+          {t('documentForm.title')}
           <input
             className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500"
             onChange={(event) =>
               setForm((current) => ({ ...current, title: event.target.value }))
             }
-            placeholder={isGerman ? 'Lageplan' : 'Site plan'}
+            placeholder={t('documentForm.titlePlaceholder')}
             required
             value={form.title}
           />
         </label>
 
         <label className="text-sm font-medium text-slate-700">
-          {isGerman ? 'Typ' : 'Type'}
+          {t('documentForm.type')}
           <input
             className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500"
             onChange={(event) =>
               setForm((current) => ({ ...current, type: event.target.value }))
             }
-            placeholder={isGerman ? 'Genehmigungen' : 'Permits'}
+            placeholder={t('documentForm.typePlaceholder')}
             required
             value={form.type}
           />
@@ -62,7 +62,7 @@ export function AddDocumentForm({
 
       <div className="grid gap-4 md:grid-cols-[1fr,2fr]">
         <label className="text-sm font-medium text-slate-700">
-          {isGerman ? 'Status' : 'Status'}
+          {t('common.status')}
           <select
             className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500"
             onChange={(event) =>
@@ -73,23 +73,21 @@ export function AddDocumentForm({
             }
             value={form.status}
           >
-            <option value="pending">{isGerman ? 'ausstehend' : 'pending'}</option>
-            <option value="uploaded">{isGerman ? 'hochgeladen' : 'uploaded'}</option>
-            <option value="missing">{isGerman ? 'fehlend' : 'missing'}</option>
+            <option value="pending">{t('statuses.documents.pending')}</option>
+            <option value="uploaded">{t('statuses.documents.uploaded')}</option>
+            <option value="missing">{t('statuses.documents.missing')}</option>
           </select>
         </label>
 
         <label className="text-sm font-medium text-slate-700">
-          {isGerman ? 'Notizen' : 'Notes'}
+          {t('common.notes')}
           <textarea
             className="mt-2 min-h-24 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none transition focus:border-brand-500"
             onChange={(event) =>
               setForm((current) => ({ ...current, notes: event.target.value }))
             }
             placeholder={
-              isGerman
-                ? 'Was ist enthalten, wer ist zuständig, was fehlt noch?'
-                : 'What is included, who owns it, and what is still missing?'
+              t('documentForm.notesPlaceholder')
             }
             value={form.notes}
           />
@@ -98,7 +96,7 @@ export function AddDocumentForm({
 
       <div>
         <p className="text-sm font-medium text-slate-700">
-          {isGerman ? 'Mit Anforderungen verknüpfen' : 'Link to requirements'}
+          {t('documentForm.linkRequirements')}
         </p>
         <div className="mt-3 grid gap-2 md:grid-cols-2">
           {requirements.map((requirement) => {
@@ -124,7 +122,7 @@ export function AddDocumentForm({
                   }
                   type="checkbox"
                 />
-                <span>{requirement.title}</span>
+                <span>{getRequirementDisplay(requirement, language).title}</span>
               </label>
             )
           })}
@@ -135,7 +133,7 @@ export function AddDocumentForm({
         className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
         type="submit"
       >
-        {isGerman ? 'Dokument hinzufügen' : 'Add document'}
+        {t('documentForm.submit')}
       </button>
     </form>
   )

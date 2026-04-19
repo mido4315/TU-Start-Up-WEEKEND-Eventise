@@ -5,7 +5,7 @@ import { EmptyState } from '../components/EmptyState'
 import { EventCard } from '../components/EventCard'
 import { MetricCard } from '../components/MetricCard'
 import { PageHeader } from '../components/PageHeader'
-import { useLanguage } from '../i18n/useLanguage'
+import { useTranslation } from '../i18n/useTranslation'
 import { useEventStore } from '../store/useEventStore'
 import { buildEventProgress } from '../utils/eventProgress'
 
@@ -13,8 +13,7 @@ export function HomePage() {
   const events = useEventStore((state) => state.events)
   const requirements = useEventStore((state) => state.requirements)
   const documents = useEventStore((state) => state.documents)
-  const { language } = useLanguage()
-  const isGerman = language === 'de'
+  const { language, t } = useTranslation()
 
   const eventsWithProgress = [...events]
     .map((event) => ({
@@ -56,20 +55,14 @@ export function HomePage() {
     <div className="space-y-8">
       <PageHeader
         eyebrow="Eventise"
-        title={
-          isGerman ? 'Alle Veranstaltungen auf einen Blick' : 'All events in one place'
-        }
-        description={
-          isGerman
-            ? 'Bereitschaft, Blocker, Fristen und nächste Schritte – Genehmigungen, Anbieter, Personal und Unterlagen an einem Ort.'
-            : 'Readiness, blockers, deadlines, and next steps – permits, vendors, staffing, and documents in one place.'
-        }
+        title={t('home.title')}
+        description={t('home.description')}
         actions={
           <Link
             className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
             to="/events/new"
           >
-            {isGerman ? 'Neue Veranstaltung' : 'New event'}
+            {t('common.newEvent')}
           </Link>
         }
       />
@@ -77,29 +70,23 @@ export function HomePage() {
       <div className="grid gap-4 md:grid-cols-3">
         <MetricCard
           detail={
-            isGerman
-              ? 'Gespeicherte Veranstaltungen im Workspace.'
-              : 'Saved events in the workspace.'
+            t('home.eventsDetail')
           }
-          label={isGerman ? 'Veranstaltungen' : 'Events'}
+          label={t('home.eventsLabel')}
           value={String(events.length)}
         />
         <MetricCard
           detail={
-            isGerman
-              ? 'Durchschnittlicher Fortschritt über Checkliste und Dokumente.'
-              : 'Average progress across checklist and documents.'
+            t('home.readinessDetail')
           }
-          label={isGerman ? 'Durchschn. Bereitschaft' : 'Avg. readiness'}
+          label={t('home.readinessLabel')}
           value={`${averageReadiness}%`}
         />
         <MetricCard
           detail={
-            isGerman
-              ? 'Offene Blocker, die noch Nachverfolgung erfordern.'
-              : 'Open blockers that still need follow-up.'
+            t('home.blockersDetail')
           }
-          label={isGerman ? 'Aktive Blocker' : 'Active blockers'}
+          label={t('home.blockersLabel')}
           value={String(blockers.length)}
         />
       </div>
@@ -108,18 +95,14 @@ export function HomePage() {
         <section className="space-y-4">
           {eventsWithProgress.length === 0 ? (
             <EmptyState
-              title={isGerman ? 'Noch keine Veranstaltungen' : 'No events yet'}
-              description={
-                isGerman
-                  ? 'Erste Veranstaltung anlegen, um Anforderungen, Fristen und Dokumenten-Tracking zu generieren.'
-                  : 'Create your first event to generate requirements, deadlines, and document tracking.'
-              }
+              title={t('home.emptyTitle')}
+              description={t('home.emptyDescription')}
               action={
                 <Link
                   className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
                   to="/events/new"
                 >
-                  {isGerman ? 'Veranstaltung anlegen' : 'Create event'}
+                  {t('common.createEvent')}
                 </Link>
               }
             />

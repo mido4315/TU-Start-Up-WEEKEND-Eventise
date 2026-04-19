@@ -1,5 +1,5 @@
 import { Link, NavLink, Outlet } from 'react-router-dom'
-import { useLanguage } from '../i18n/useLanguage'
+import { useTranslation } from '../i18n/useTranslation'
 import { cn } from '../utils/format'
 
 function FlagIcon() {
@@ -23,12 +23,11 @@ function FlagIcon() {
 }
 
 export function Layout() {
-  const { language, setLanguage } = useLanguage()
-  const isGerman = language === 'de'
+  const { language, setLanguage, t } = useTranslation()
 
   const navItems = [
-    { label: isGerman ? 'Übersicht' : 'Overview', to: '/' },
-    { label: isGerman ? 'Neue Veranstaltung' : 'New event', to: '/events/new' },
+    { label: t('layout.overview'), to: '/' },
+    { label: t('layout.newEvent'), to: '/events/new' },
   ]
 
   return (

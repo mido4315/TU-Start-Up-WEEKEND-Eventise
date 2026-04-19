@@ -1,6 +1,7 @@
-import { useLanguage } from '../i18n/useLanguage'
+import { useTranslation } from '../i18n/useTranslation'
 import type { Requirement } from '../types/event'
 import { formatDate, formatRelativeDate } from '../utils/format'
+import { getRequirementDisplay } from '../utils/localizedContent'
 import { Card } from './Card'
 
 interface DeadlineListProps {
@@ -9,17 +10,16 @@ interface DeadlineListProps {
 }
 
 export function DeadlineList({ title, items }: DeadlineListProps) {
-  const { language } = useLanguage()
-  const isGerman = language === 'de'
+  const { language, t } = useTranslation()
 
   return (
     <Card
-      title={title ?? (isGerman ? 'Anstehende Fristen' : 'Upcoming deadlines')}
-      eyebrow={isGerman ? 'Zeitplan' : 'Timeline'}
+      title={title ?? t('deadlines.title')}
+      eyebrow={t('deadlines.eyebrow')}
     >
       {items.length === 0 ? (
         <p className="text-sm text-slate-500">
-          {isGerman ? 'Noch keine anstehenden Fristen.' : 'No upcoming deadlines yet.'}
+          {t('deadlines.empty')}
         </p>
       ) : (
         <div className="space-y-3">
@@ -29,7 +29,9 @@ export function DeadlineList({ title, items }: DeadlineListProps) {
               className="flex flex-col gap-2 rounded-2xl border border-slate-100 bg-slate-50/80 p-4 md:flex-row md:items-center md:justify-between"
             >
               <div>
-                <p className="font-semibold text-slate-900">{item.title}</p>
+                <p className="font-semibold text-slate-900">
+                  {getRequirementDisplay(item, language).title}
+                </p>
                 {item.eventName && (
                   <p className="mt-1 text-sm text-slate-500">{item.eventName}</p>
                 )}

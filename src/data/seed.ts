@@ -9,6 +9,8 @@ const riversideEvent: Event = {
   organizerPhone: '0231 123456',
   organizerIdNumber: '',
   name: 'Sommermarkt am Phoenixsee',
+  firstName: 'Mina',
+  lastName: 'Schneider',
   date: '2026-06-14T10:00:00.000Z',
   location: 'Phoenixsee-Promenade, Dortmund',
   expectedAttendance: 420,

@@ -1,4 +1,5 @@
 import type { AppLanguage } from '../i18n/types'
+import { translate } from '../i18n/translate'
 import type {
   DocumentStatus,
   RequirementCategory,
@@ -18,34 +19,11 @@ export const documentStatusOptions: DocumentStatus[] = [
   'missing',
 ]
 
-const categoryLabels: Record<AppLanguage, Record<RequirementCategory, string>> = {
-  de: {
-    permits: 'Genehmigungen',
-    operations: 'Betrieb & Logistik',
-    staffing: 'Personal',
-    budget: 'Budget',
-    vendors: 'Stände & Anbieter',
-    security: 'Sicherheit',
-    marketing: 'Marketing',
-    documents: 'Unterlagen',
-  },
-  en: {
-    permits: 'Permits',
-    operations: 'Operations & logistics',
-    staffing: 'Staffing',
-    budget: 'Budget',
-    vendors: 'Vendors',
-    security: 'Security',
-    marketing: 'Marketing',
-    documents: 'Documents',
-  },
-}
-
 export function getCategoryLabel(
   category: RequirementCategory,
   language: AppLanguage = 'de',
 ) {
-  return categoryLabels[language][category]
+  return translate(language, `categories.${category}`)
 }
 
 export const badgeTones = {

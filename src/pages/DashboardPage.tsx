@@ -5,6 +5,7 @@ import { EmptyState } from '../components/EmptyState'
 import { EventCard } from '../components/EventCard'
 import { MetricCard } from '../components/MetricCard'
 import { PageHeader } from '../components/PageHeader'
+import { useTranslation } from '../i18n/useTranslation'
 import { useEventStore } from '../store/useEventStore'
 import { buildEventProgress } from '../utils/eventProgress'
 
@@ -12,6 +13,7 @@ export function DashboardPage() {
   const events = useEventStore((state) => state.events)
   const requirements = useEventStore((state) => state.requirements)
   const documents = useEventStore((state) => state.documents)
+  const { language, t } = useTranslation()
 
   const eventsWithProgress = [...events]
     .map((event) => ({
@@ -19,6 +21,7 @@ export function DashboardPage() {
       progress: buildEventProgress(
         requirements.filter((item) => item.eventId === event.id),
         documents.filter((item) => item.eventId === event.id),
+        language,
       ),
     }))
     .sort(
@@ -57,32 +60,32 @@ export function DashboardPage() {
     <div className="space-y-8">
       <PageHeader
         eyebrow="Dashboard"
-        title="Alle Veranstaltungen auf einen Blick"
-        description="Bereitschaft, Blocker, Fristen und nächste Schritte für Veranstalter, die Genehmigungen, Anbieter, Personal und Unterlagen koordinieren."
+        title={t('home.title')}
+        description={t('home.description')}
         actions={
           <Link
             className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
             to="/events/new"
           >
-            Neue Veranstaltung
+            {t('common.newEvent')}
           </Link>
         }
       />
 
       <div className="grid gap-4 md:grid-cols-3">
         <MetricCard
-          detail="Veranstaltungen im lokalen MVP-Workspace."
-          label="Alle Veranstaltungen"
+          detail={t('home.eventsDetail')}
+          label={t('home.eventsLabel')}
           value={String(events.length)}
         />
         <MetricCard
-          detail="Durchschnittlicher Fortschritt über Checkliste und Dokumente."
-          label="Durchschn. Bereitschaft"
+          detail={t('home.readinessDetail')}
+          label={t('home.readinessLabel')}
           value={`${averageReadiness}%`}
         />
         <MetricCard
-          detail="Offene Blocker, die noch Nachverfolgung erfordern."
-          label="Blocker"
+          detail={t('home.blockersDetail')}
+          label={t('common.blockers')}
           value={String(blockers.length)}
         />
       </div>
@@ -91,14 +94,14 @@ export function DashboardPage() {
         <section className="space-y-4">
           {eventsWithProgress.length === 0 ? (
             <EmptyState
-              title="Noch keine Veranstaltungen"
-              description="Erste Veranstaltung anlegen, um Anforderungen, Fristen und Dokumenten-Tracking zu generieren."
+              title={t('home.emptyTitle')}
+              description={t('home.emptyDescription')}
               action={
                 <Link
                   className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
                   to="/events/new"
                 >
-                  Veranstaltung anlegen
+                  {t('common.createEvent')}
                 </Link>
               }
             />
