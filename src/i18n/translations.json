@@ -205,6 +205,29 @@
         "area": "Fläche (m²)",
         "days": "Anzahl Tage"
       },
+      "mapPicker": {
+        "emptyLocation": "Ort über Karte auswählen",
+        "emptyAddress": "Adresse über Karte auswählen",
+        "open": "Karte öffnen",
+        "title": "Ort auf Beispielkarte auswählen",
+        "subtitle": "Dies ist eine Demo-Karte mit Beispielorten. Die Auswahl wird als Veranstaltungsort gespeichert.",
+        "close": "Schließen",
+        "select": "Auswählen",
+        "locations": {
+          "marketSquare": {
+            "name": "Alter Markt, Dortmund",
+            "detail": "Zentraler Platz für Märkte und Nachbarschaftstreffen."
+          },
+          "riversidePark": {
+            "name": "Phoenixsee-Promenade",
+            "detail": "Offene Fläche am Wasser mit guter Laufkundschaft."
+          },
+          "communityHall": {
+            "name": "Bürgerhaus Nordstadt",
+            "detail": "Community-orientierter Innen- und Außenbereich."
+          }
+        }
+      },
       "toggles": {
         "publicVenue": ["Öffentliche Fläche", "Straßenbereich, Platz oder Park in städtischem Besitz."],
         "privateVenue": ["Private Fläche", "Vereinsgelände, Privatgrundstück oder gemietete Halle."],
@@ -524,6 +547,29 @@
         "usageType": "Usage type",
         "area": "Area (m²)",
         "days": "Number of days"
+      },
+      "mapPicker": {
+        "emptyLocation": "Choose a location on the map",
+        "emptyAddress": "Choose an address on the map",
+        "open": "Open map",
+        "title": "Choose a location on the demo map",
+        "subtitle": "This is a demo map with sample places. The selected place will be saved as the event location.",
+        "close": "Close",
+        "select": "Select",
+        "locations": {
+          "marketSquare": {
+            "name": "Old Market, Dortmund",
+            "detail": "Central square for markets and neighborhood gatherings."
+          },
+          "riversidePark": {
+            "name": "Phoenix Lake Promenade",
+            "detail": "Open waterfront area with strong foot traffic."
+          },
+          "communityHall": {
+            "name": "North City Community Hall",
+            "detail": "Community-focused indoor and outdoor event space."
+          }
+        }
       },
       "toggles": {
         "publicVenue": ["Public space", "Street area, square, or park owned by the city."],

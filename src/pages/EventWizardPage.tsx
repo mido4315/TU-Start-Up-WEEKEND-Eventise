@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Card } from '../components/Card'
+import { MapLocationPicker } from '../components/MapLocationPicker'
 import { PageHeader } from '../components/PageHeader'
 import { getRequiredDocuments } from '../data/documentRequirements'
 import { useTranslation } from '../i18n/useTranslation'
@@ -106,6 +107,9 @@ export function EventWizardPage() {
   const { language, t, tList } = useTranslation()
   const [step, setStep] = useState(1)
   const [form, setForm] = useState<EventFormValues>(initialForm)
+  const [mapPickerTarget, setMapPickerTarget] = useState<'location' | 'organizerAddress' | null>(
+    null,
+  )
 
   const previewRequirements = generateRequirements({ ...form, id: 'preview-event' })
   const requiredDocs = getRequiredDocuments(form)
@@ -137,6 +141,33 @@ export function EventWizardPage() {
 
   const formatFee = (value: number) =>
     value.toLocaleString(locale, { style: 'currency', currency: 'EUR' })
+
+  const mockLocations = [
+    {
+      id: 'A',
+      name: t('wizard.mapPicker.locations.marketSquare.name'),
+      detail: t('wizard.mapPicker.locations.marketSquare.detail'),
+      x: '46%',
+      y: '47%',
+    },
+    {
+      id: 'B',
+      name: t('wizard.mapPicker.locations.riversidePark.name'),
+      detail: t('wizard.mapPicker.locations.riversidePark.detail'),
+      x: '24%',
+      y: '72%',
+    },
+    {
+      id: 'C',
+      name: t('wizard.mapPicker.locations.communityHall.name'),
+      detail: t('wizard.mapPicker.locations.communityHall.detail'),
+      x: '76%',
+      y: '28%',
+    },
+  ]
+
+  const selectedMapValue =
+    mapPickerTarget === 'organizerAddress' ? form.organizerAddress : form.location
 
   return (
     <div className="space-y-8">
@@ -191,14 +222,23 @@ export function EventWizardPage() {
                 </LabeledInput>
               </div>
 
-              <LabeledInput label={t('wizard.organizerFields.address')}>
-                <input
-                  className={inputClass}
-                  onChange={(e) => update('organizerAddress', e.target.value)}
-                  placeholder={t('wizard.organizerPlaceholders.address')}
-                  value={form.organizerAddress}
-                />
-              </LabeledInput>
+              <div className="text-sm font-medium text-slate-700">
+                <p>{t('wizard.organizerFields.address')}</p>
+                <button
+                  className={`${inputClass} flex min-h-[52px] items-center justify-between gap-3 text-left ${
+                    form.organizerAddress ? 'text-slate-900' : 'text-slate-400'
+                  }`}
+                  onClick={() => setMapPickerTarget('organizerAddress')}
+                  type="button"
+                >
+                  <span>
+                    {form.organizerAddress || t('wizard.mapPicker.emptyAddress')}
+                  </span>
+                  <span className="rounded-full bg-brand-100 px-3 py-1 text-xs font-semibold text-brand-800">
+                    {t('wizard.mapPicker.open')}
+                  </span>
+                </button>
+              </div>
 
               <LabeledInput label={t('wizard.organizerFields.phone')}>
                 <input
@@ -281,15 +321,21 @@ export function EventWizardPage() {
                 </LabeledInput>
               </div>
 
-              <LabeledInput label={t('wizard.fields.location')}>
-                <input
-                  className={inputClass}
-                  onChange={(event) => update('location', event.target.value)}
-                  placeholder={t('wizard.fields.locationPlaceholder')}
-                  required
-                  value={form.location}
-                />
-              </LabeledInput>
+              <div className="text-sm font-medium text-slate-700">
+                <p>{t('wizard.fields.location')}</p>
+                <button
+                  className={`${inputClass} flex min-h-[52px] items-center justify-between gap-3 text-left ${
+                    form.location ? 'text-slate-900' : 'text-slate-400'
+                  }`}
+                  onClick={() => setMapPickerTarget('location')}
+                  type="button"
+                >
+                  <span>{form.location || t('wizard.mapPicker.emptyLocation')}</span>
+                  <span className="rounded-full bg-brand-100 px-3 py-1 text-xs font-semibold text-brand-800">
+                    {t('wizard.mapPicker.open')}
+                  </span>
+                </button>
+              </div>
             </div>
           )}
 
@@ -814,6 +860,26 @@ export function EventWizardPage() {
           )}
         </div>
       </div>
+
+      {mapPickerTarget && (
+        <MapLocationPicker
+          closeLabel={t('wizard.mapPicker.close')}
+          locations={mockLocations}
+          onClose={() => setMapPickerTarget(null)}
+          onSelect={(location) => {
+            if (mapPickerTarget === 'organizerAddress') {
+              update('organizerAddress', location)
+            } else {
+              update('location', location)
+            }
+            setMapPickerTarget(null)
+          }}
+          selectLabel={t('wizard.mapPicker.select')}
+          selectedLocation={selectedMapValue}
+          subtitle={t('wizard.mapPicker.subtitle')}
+          title={t('wizard.mapPicker.title')}
+        />
+      )}
     </div>
   )
 }
