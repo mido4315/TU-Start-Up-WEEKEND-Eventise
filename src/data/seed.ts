@@ -44,6 +44,8 @@ const studentEvent: Event = {
   organizerPhone: '0170 9876543',
   organizerIdNumber: '',
   name: 'Studenten-Straßenfest Nacht',
+  firstName: 'Jonas',
+  lastName: 'Weber',
   date: '2026-07-05T16:00:00.000Z',
   location: 'Campus Süd & Weststraße, Dortmund',
   expectedAttendance: 950,

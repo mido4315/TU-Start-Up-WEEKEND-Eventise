@@ -50,16 +50,6 @@ const initialForm: EventFormValues = {
   usageDays: 1,
 }
 
-const stepLabels = [
-  'Veranstalter',
-  'Grunddaten',
-  'Fläche & Verkehr',
-  'Risikofaktoren',
-  'Unterlagen',
-  'Gebühren',
-  'Übersicht & Einreichen',
-]
-
 function Toggle({
   active,
   label,
@@ -122,6 +112,7 @@ export function EventWizardPage() {
   const feeEstimate = calculateFee(form.usageType, form.feeZone, form.usageAreaSqm, form.usageDays)
   const locale = language === 'de' ? 'de-DE' : 'en-US'
   const stepLabels = [
+    t('wizard.steps.organizer'),
     t('wizard.steps.basics'),
     t('wizard.steps.traffic'),
     t('wizard.steps.risks'),
@@ -178,65 +169,66 @@ export function EventWizardPage() {
           {step === 1 && (
             <div className="grid gap-4">
               <p className="text-sm text-slate-600">
-                Diese Angaben werden für die offizielle Veranstaltungsanmeldung benötigt. Die Personalausweisnummer ist für das spätere PostIdent-Verfahren relevant.
+                {t('wizard.organizerIntro')}
               </p>
 
               <div className="grid gap-4 md:grid-cols-2">
-                <LabeledInput label="Vorname">
+                <LabeledInput label={t('wizard.organizerFields.firstName')}>
                   <input
                     className={inputClass}
                     onChange={(e) => update('organizerFirstName', e.target.value)}
-                    placeholder="Maria"
+                    placeholder={t('wizard.organizerPlaceholders.firstName')}
                     value={form.organizerFirstName}
                   />
                 </LabeledInput>
-                <LabeledInput label="Nachname">
+                <LabeledInput label={t('wizard.organizerFields.lastName')}>
                   <input
                     className={inputClass}
                     onChange={(e) => update('organizerLastName', e.target.value)}
-                    placeholder="Mustermann"
+                    placeholder={t('wizard.organizerPlaceholders.lastName')}
                     value={form.organizerLastName}
                   />
                 </LabeledInput>
               </div>
 
-              <LabeledInput label="Adresse">
+              <LabeledInput label={t('wizard.organizerFields.address')}>
                 <input
                   className={inputClass}
                   onChange={(e) => update('organizerAddress', e.target.value)}
-                  placeholder="Musterstraße 1, 44137 Dortmund"
+                  placeholder={t('wizard.organizerPlaceholders.address')}
                   value={form.organizerAddress}
                 />
               </LabeledInput>
 
-              <LabeledInput label="Telefonnummer">
+              <LabeledInput label={t('wizard.organizerFields.phone')}>
                 <input
                   className={inputClass}
                   onChange={(e) => update('organizerPhone', e.target.value)}
-                  placeholder="+49 231 123456"
+                  placeholder={t('wizard.organizerPlaceholders.phone')}
                   type="tel"
                   value={form.organizerPhone}
                 />
               </LabeledInput>
 
-              <LabeledInput label="Personalausweisnummer">
+              <LabeledInput label={t('wizard.organizerFields.idNumber')}>
                 <input
                   className={inputClass}
                   onChange={(e) => update('organizerIdNumber', e.target.value)}
-                  placeholder="L01X00T47 (für PostIdent)"
+                  placeholder={t('wizard.organizerPlaceholders.idNumber')}
                   value={form.organizerIdNumber}
                 />
               </LabeledInput>
 
               <div className="rounded-2xl border border-amber-200 bg-amber-50/70 px-4 py-3 text-sm text-slate-700">
-                <span className="font-semibold">Datenschutz:</span> Ihre Daten werden ausschließlich lokal gespeichert und nicht an Dritte übertragen.
+                <span className="font-semibold">{t('wizard.organizerPrivacyTitle')}</span>{' '}
+                {t('wizard.organizerPrivacyText')}
               </div>
             </div>
           )}
 
           {step === 2 && (
             <div className="grid gap-4">
-              <LabeledInput label="Veranstaltungsname">
+              <LabeledInput label={t('wizard.fields.eventName')}>
                 <input
                   className={inputClass}
                   onChange={(event) => update('name', event.target.value)}
@@ -563,14 +555,31 @@ export function EventWizardPage() {
           {step === 7 && (
             <div className="space-y-5">
               <div>
-                <p className="mb-3 text-sm font-semibold text-slate-900">Veranstalter</p>
+                <p className="mb-3 text-sm font-semibold text-slate-900">
+                  {t('wizard.organizerReviewTitle')}
+                </p>
                 <div className="grid gap-3 md:grid-cols-2">
                   {([
-                    ['Vorname', form.organizerFirstName || '–'],
-                    ['Nachname', form.organizerLastName || '–'],
-                    ['Adresse', form.organizerAddress || '–'],
-                    ['Telefon', form.organizerPhone || '–'],
-                    ['Personalausweis-Nr.', form.organizerIdNumber || '(noch nicht angegeben)'],
+                    [
+                      t('wizard.organizerReviewLabels.firstName'),
+                      form.organizerFirstName || t('wizard.organizerReviewMissing'),
+                    ],
+                    [
+                      t('wizard.organizerReviewLabels.lastName'),
+                      form.organizerLastName || t('wizard.organizerReviewMissing'),
+                    ],
+                    [
+                      t('wizard.organizerReviewLabels.address'),
+                      form.organizerAddress || t('wizard.organizerReviewMissing'),
+                    ],
+                    [
+                      t('wizard.organizerReviewLabels.phone'),
+                      form.organizerPhone || t('wizard.organizerReviewMissing'),
+                    ],
+                    [
+                      t('wizard.organizerReviewLabels.idNumber'),
+                      form.organizerIdNumber || t('wizard.organizerReviewNoId'),
+                    ],
                   ] as [string, string][]).map(([label, value]) => (
                     <div key={label} className="rounded-2xl border border-slate-100 bg-slate-50/80 p-4">
                       <p className="text-xs uppercase tracking-[0.22em] text-slate-400">{label}</p>
@@ -704,9 +713,11 @@ export function EventWizardPage() {
                       {t('wizard.address')}
                     </p>
                     <p className="mt-2 font-medium text-slate-900">
-                      Ordnungsamt - {dortmundContacts.address}
+                      {t('wizard.authorityLabel')}: {dortmundContacts.address}
                     </p>
-                    <p className="mt-1 text-sm text-slate-600">Fax: {dortmundContacts.fax}</p>
+                    <p className="mt-1 text-sm text-slate-600">
+                      {t('wizard.faxLabel')}: {dortmundContacts.fax}
+                    </p>
                   </div>
                 </div>
               </div>
