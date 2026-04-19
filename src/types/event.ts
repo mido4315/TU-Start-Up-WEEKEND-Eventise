@@ -29,6 +29,13 @@ export type UsageType =
 
 export interface Event {
   id: string
+  // Organizer
+  organizerFirstName: string
+  organizerLastName: string
+  organizerAddress: string
+  organizerPhone: string
+  organizerIdNumber: string
+  // Event basics
   name: string
   date: string
   location: string
@@ -102,6 +109,13 @@ export interface EventProgress {
 }
 
 export interface EventFormValues {
+  // Organizer
+  organizerFirstName: string
+  organizerLastName: string
+  organizerAddress: string
+  organizerPhone: string
+  organizerIdNumber: string
+  // Event basics
   name: string
   date: string
   location: string

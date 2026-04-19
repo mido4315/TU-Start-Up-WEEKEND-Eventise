@@ -10,9 +10,14 @@ import { formatDate } from '../utils/format'
 import { generateRequirements } from '../utils/rulesEngine'
 import { useEventStore } from '../store/useEventStore'
 
-const TOTAL_STEPS = 6
+const TOTAL_STEPS = 7
 
 const initialForm: EventFormValues = {
+  organizerFirstName: '',
+  organizerLastName: '',
+  organizerAddress: '',
+  organizerPhone: '',
+  organizerIdNumber: '',
   name: '',
   date: '2026-08-22T12:00:00.000Z',
   location: '',
@@ -38,6 +43,7 @@ const initialForm: EventFormValues = {
 }
 
 const stepLabels = [
+  'Veranstalter',
   'Grunddaten',
   'Fläche & Verkehr',
   'Risikofaktoren',
@@ -138,6 +144,65 @@ export function EventWizardPage() {
 
           {step === 1 && (
             <div className="grid gap-4">
+              <p className="text-sm text-slate-600">
+                Diese Angaben werden für die offizielle Veranstaltungsanmeldung benötigt. Die Personalausweisnummer ist für das spätere PostIdent-Verfahren relevant.
+              </p>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <LabeledInput label="Vorname">
+                  <input
+                    className={inputClass}
+                    onChange={(e) => update('organizerFirstName', e.target.value)}
+                    placeholder="Maria"
+                    value={form.organizerFirstName}
+                  />
+                </LabeledInput>
+                <LabeledInput label="Nachname">
+                  <input
+                    className={inputClass}
+                    onChange={(e) => update('organizerLastName', e.target.value)}
+                    placeholder="Mustermann"
+                    value={form.organizerLastName}
+                  />
+                </LabeledInput>
+              </div>
+
+              <LabeledInput label="Adresse">
+                <input
+                  className={inputClass}
+                  onChange={(e) => update('organizerAddress', e.target.value)}
+                  placeholder="Musterstraße 1, 44137 Dortmund"
+                  value={form.organizerAddress}
+                />
+              </LabeledInput>
+
+              <LabeledInput label="Telefonnummer">
+                <input
+                  className={inputClass}
+                  onChange={(e) => update('organizerPhone', e.target.value)}
+                  placeholder="+49 231 123456"
+                  type="tel"
+                  value={form.organizerPhone}
+                />
+              </LabeledInput>
+
+              <LabeledInput label="Personalausweisnummer">
+                <input
+                  className={inputClass}
+                  onChange={(e) => update('organizerIdNumber', e.target.value)}
+                  placeholder="L01X00T47 (für PostIdent)"
+                  value={form.organizerIdNumber}
+                />
+              </LabeledInput>
+
+              <div className="rounded-2xl border border-amber-200 bg-amber-50/70 px-4 py-3 text-sm text-slate-700">
+                <span className="font-semibold">Datenschutz:</span> Ihre Daten werden ausschließlich lokal gespeichert und nicht an Dritte übertragen.
+              </div>
+            </div>
+          )}
+
+          {step === 2 && (
+            <div className="grid gap-4">
               <LabeledInput label="Veranstaltungsname">
                 <input
                   className={inputClass}
@@ -181,7 +246,7 @@ export function EventWizardPage() {
             </div>
           )}
 
-          {step === 2 && (
+          {step === 3 && (
             <div className="space-y-6">
               <div>
                 <p className="mb-3 text-sm font-semibold text-slate-900">
@@ -265,7 +330,7 @@ export function EventWizardPage() {
             </div>
           )}
 
-          {step === 3 && (
+          {step === 4 && (
             <div className="grid gap-3 md:grid-cols-2">
               {([
                 {
@@ -310,7 +375,7 @@ export function EventWizardPage() {
             </div>
           )}
 
-          {step === 4 && (
+          {step === 5 && (
             <div className="space-y-5">
               <p className="text-sm text-slate-600">
                 Basierend auf Ihren Angaben werden folgende Unterlagen benötigt.
@@ -349,7 +414,7 @@ export function EventWizardPage() {
             </div>
           )}
 
-          {step === 5 && (
+          {step === 6 && (
             <div className="space-y-6">
               <p className="text-sm text-slate-600">
                 Orientierung nach dem städtischen Gebührentarif für Sondernutzungen.
@@ -467,8 +532,26 @@ export function EventWizardPage() {
             </div>
           )}
 
-          {step === 6 && (
+          {step === 7 && (
             <div className="space-y-5">
+              <div>
+                <p className="mb-3 text-sm font-semibold text-slate-900">Veranstalter</p>
+                <div className="grid gap-3 md:grid-cols-2">
+                  {([
+                    ['Vorname', form.organizerFirstName || '–'],
+                    ['Nachname', form.organizerLastName || '–'],
+                    ['Adresse', form.organizerAddress || '–'],
+                    ['Telefon', form.organizerPhone || '–'],
+                    ['Personalausweis-Nr.', form.organizerIdNumber || '(noch nicht angegeben)'],
+                  ] as [string, string][]).map(([label, value]) => (
+                    <div key={label} className="rounded-2xl border border-slate-100 bg-slate-50/80 p-4">
+                      <p className="text-xs uppercase tracking-[0.22em] text-slate-400">{label}</p>
+                      <p className="mt-2 font-medium text-slate-900">{value}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               <div className="grid gap-4 md:grid-cols-2">
                 {([
                   ['Name', form.name || 'Noch kein Name'],
@@ -648,7 +731,7 @@ export function EventWizardPage() {
             </div>
           </details>
 
-          {step >= 4 && (
+          {step >= 5 && (
             <Card
               title={`${requiredDocs.length} Unterlagen erforderlich`}
               eyebrow="Dokumenten-Check"

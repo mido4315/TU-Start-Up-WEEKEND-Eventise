@@ -3,6 +3,11 @@ import { generateRequirements } from '../utils/rulesEngine'
 
 const riversideEvent: Event = {
   id: 'event-riverside-summer-market',
+  organizerFirstName: 'Maria',
+  organizerLastName: 'Hoffmann',
+  organizerAddress: 'Königswall 3, 44137 Dortmund',
+  organizerPhone: '0231 123456',
+  organizerIdNumber: '',
   name: 'Sommermarkt am Phoenixsee',
   date: '2026-06-14T10:00:00.000Z',
   location: 'Phoenixsee-Promenade, Dortmund',
@@ -31,6 +36,11 @@ const riversideEvent: Event = {
 
 const studentEvent: Event = {
   id: 'event-student-night-street-festival',
+  organizerFirstName: 'Jonas',
+  organizerLastName: 'Weber',
+  organizerAddress: 'Emil-Figge-Str. 50, 44227 Dortmund',
+  organizerPhone: '0170 9876543',
+  organizerIdNumber: '',
   name: 'Studenten-Straßenfest Nacht',
   date: '2026-07-05T16:00:00.000Z',
   location: 'Campus Süd & Weststraße, Dortmund',
