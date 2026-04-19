@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Card } from '../components/Card'
 import { PageHeader } from '../components/PageHeader'
 import { getRequiredDocuments } from '../data/documentRequirements'
+import { serviceCategories } from '../data/serviceProviders'
 import { useTranslation } from '../i18n/useTranslation'
 import { useEventStore } from '../store/useEventStore'
 import type { EventFormValues, FeeZone, UsageType } from '../types/event'
@@ -16,7 +17,7 @@ import {
 } from '../utils/localizedContent'
 import { generateRequirements } from '../utils/rulesEngine'
 
-const TOTAL_STEPS = 7
+const TOTAL_STEPS = 8
 
 const initialForm: EventFormValues = {
   organizerFirstName: '',
@@ -25,8 +26,6 @@ const initialForm: EventFormValues = {
   organizerPhone: '',
   organizerIdNumber: '',
   name: '',
-  firstName: '',
-  lastName: '',
   date: '2026-08-22T12:00:00.000Z',
   location: '',
   expectedAttendance: 250,
@@ -48,6 +47,16 @@ const initialForm: EventFormValues = {
   usageType: 'other',
   usageAreaSqm: 50,
   usageDays: 1,
+  insuranceWanted: false,
+  insuranceProviderId: '',
+  logisticsWanted: false,
+  logisticsProviderId: '',
+  securityWanted: false,
+  securityProviderId: '',
+  sanitaryWanted: false,
+  sanitaryProviderId: '',
+  cateringWanted: false,
+  cateringProviderId: '',
 }
 
 const stepLabels = [
@@ -55,6 +64,7 @@ const stepLabels = [
   'Grunddaten',
   'Fläche & Verkehr',
   'Risikofaktoren',
+  'Dienstleister',
   'Unterlagen',
   'Gebühren',
   'Übersicht & Einreichen',
@@ -400,6 +410,119 @@ export function EventWizardPage() {
           )}
 
           {step === 5 && (
+            <div className="space-y-4">
+              <p className="text-sm text-slate-600">
+                Wählen Sie benötigte Dienstleister direkt aus. Aktivieren Sie eine Kategorie und wählen Sie Ihren Anbieter.
+              </p>
+              {serviceCategories.map((category) => {
+                const wantedKey = `${category.key}Wanted` as keyof EventFormValues
+                const providerKey = `${category.key}ProviderId` as keyof EventFormValues
+                const isWanted = form[wantedKey] as boolean
+                const selectedId = form[providerKey] as string
+
+                return (
+                  <div key={category.key} className="overflow-hidden rounded-3xl border border-slate-200 bg-white">
+                    <button
+                      type="button"
+                      className={`flex w-full items-center gap-4 p-5 text-left transition ${
+                        isWanted ? 'bg-slate-950 text-white' : 'hover:bg-slate-50'
+                      }`}
+                      onClick={() => {
+                        update(wantedKey, !isWanted as EventFormValues[typeof wantedKey])
+                        if (isWanted) update(providerKey, '' as EventFormValues[typeof providerKey])
+                      }}
+                    >
+                      <span className="text-2xl">{category.icon}</span>
+                      <div className="flex-1">
+                        <p className={`font-semibold ${isWanted ? 'text-white' : 'text-slate-900'}`}>
+                          {category.label}
+                        </p>
+                        <p className={`mt-0.5 text-sm ${isWanted ? 'text-slate-300' : 'text-slate-500'}`}>
+                          {category.description}
+                        </p>
+                      </div>
+                      <span className={`shrink-0 rounded-full border px-3 py-1 text-xs font-semibold transition ${
+                        isWanted
+                          ? 'border-white/30 bg-white/10 text-white'
+                          : 'border-slate-200 text-slate-500'
+                      }`}>
+                        {isWanted ? 'Aktiviert' : 'Nicht benötigt'}
+                      </span>
+                    </button>
+
+                    {isWanted && (
+                      <div className="grid gap-3 border-t border-slate-100 bg-slate-50/50 p-4 md:grid-cols-2">
+                        {category.providers.map((provider) => {
+                          const selected = selectedId === provider.id
+                          return (
+                            <button
+                              key={provider.id}
+                              type="button"
+                              onClick={() => update(providerKey, provider.id as EventFormValues[typeof providerKey])}
+                              className={`relative rounded-2xl border p-4 text-left transition ${
+                                selected
+                                  ? 'border-brand-500 bg-brand-50 ring-2 ring-brand-400/30'
+                                  : 'border-slate-200 bg-white hover:border-brand-300 hover:bg-brand-50/40'
+                              }`}
+                            >
+                              {provider.badge && (
+                                <span className={`absolute right-3 top-3 rounded-full px-2 py-0.5 text-xs font-semibold ${
+                                  provider.badge === 'top' ? 'bg-amber-100 text-amber-700' :
+                                  provider.badge === 'beliebt' ? 'bg-brand-100 text-brand-700' :
+                                  provider.badge === 'empfohlen' ? 'bg-emerald-100 text-emerald-700' :
+                                  'bg-slate-100 text-slate-600'
+                                }`}>
+                                  {provider.badge === 'top' ? '⭐ Top-Anbieter' :
+                                   provider.badge === 'beliebt' ? '🔥 Beliebt' :
+                                   provider.badge === 'empfohlen' ? '✓ Empfohlen' : 'Neu'}
+                                </span>
+                              )}
+
+                              <div className="flex items-start justify-between gap-2 pr-20">
+                                <p className="font-semibold text-slate-900">{provider.name}</p>
+                                {selected && (
+                                  <span className="shrink-0 rounded-full bg-brand-500 p-1 text-white">
+                                    <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
+                                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                  </span>
+                                )}
+                              </div>
+
+                              <div className="mt-1 flex items-center gap-1.5">
+                                <span className="text-sm text-amber-500">
+                                  {'★'.repeat(Math.floor(provider.rating))}{'☆'.repeat(5 - Math.floor(provider.rating))}
+                                </span>
+                                <span className="text-xs text-slate-500">
+                                  {provider.rating.toFixed(1)} ({provider.reviewCount.toLocaleString('de-DE')})
+                                </span>
+                              </div>
+
+                              <p className="mt-1.5 text-sm text-slate-600">{provider.tagline}</p>
+
+                              <div className="mt-2 flex flex-wrap gap-1">
+                                {provider.highlights.map((h) => (
+                                  <span key={h} className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600">
+                                    {h}
+                                  </span>
+                                ))}
+                              </div>
+
+                              <p className={`mt-3 font-semibold ${selected ? 'text-brand-700' : 'text-slate-900'}`}>
+                                {provider.priceFrom}
+                              </p>
+                            </button>
+                          )
+                        })}
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          )}
+
+          {step === 6 && (
             <div className="space-y-5">
               <p className="text-sm text-slate-600">{t('wizard.documentsIntro')}</p>
 
@@ -439,7 +562,7 @@ export function EventWizardPage() {
             </div>
           )}
 
-          {step === 6 && (
+          {step === 7 && (
             <div className="space-y-6">
               <p className="text-sm text-slate-600">{t('wizard.feeIntro')}</p>
 
@@ -560,7 +683,7 @@ export function EventWizardPage() {
             </div>
           )}
 
-          {step === 7 && (
+          {step === 8 && (
             <div className="space-y-5">
               <div>
                 <p className="mb-3 text-sm font-semibold text-slate-900">Veranstalter</p>
@@ -585,7 +708,7 @@ export function EventWizardPage() {
                   [t('wizard.fields.eventName'), form.name || t('wizard.review.noName')],
                   [
                     t('wizard.review.organizer'),
-                    `${form.firstName} ${form.lastName}`.trim() ||
+                    `${form.organizerFirstName} ${form.organizerLastName}`.trim() ||
                       t('wizard.review.noOrganizer'),
                   ],
                   [t('wizard.review.date'), formatDate(form.date, language)],
@@ -642,6 +765,40 @@ export function EventWizardPage() {
                     )
                   })}
                 </div>
+              </div>
+
+              <div>
+                <p className="mb-3 text-sm font-semibold text-slate-900">Gebuchte Dienstleister</p>
+                {serviceCategories.some((c) => form[`${c.key}Wanted` as keyof EventFormValues]) ? (
+                  <div className="grid gap-3 md:grid-cols-2">
+                    {serviceCategories
+                      .filter((c) => form[`${c.key}Wanted` as keyof EventFormValues])
+                      .map((category) => {
+                        const providerId = form[`${category.key}ProviderId` as keyof EventFormValues] as string
+                        const provider = category.providers.find((p) => p.id === providerId)
+                        return (
+                          <div key={category.key} className="flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50/80 p-4">
+                            <span className="mt-0.5 text-xl">{category.icon}</span>
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">{category.label}</p>
+                              {provider ? (
+                                <>
+                                  <p className="mt-1 font-medium text-slate-900">{provider.name}</p>
+                                  <p className="text-sm text-brand-700">{provider.priceFrom}</p>
+                                </>
+                              ) : (
+                                <p className="mt-1 text-sm text-slate-400 italic">Kein Anbieter gewählt</p>
+                              )}
+                            </div>
+                          </div>
+                        )
+                      })}
+                  </div>
+                ) : (
+                  <p className="rounded-2xl border border-slate-100 bg-slate-50/80 p-4 text-sm text-slate-500 italic">
+                    Keine Dienstleister ausgewählt.
+                  </p>
+                )}
               </div>
 
               <div>

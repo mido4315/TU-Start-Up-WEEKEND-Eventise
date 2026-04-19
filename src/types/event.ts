@@ -37,8 +37,6 @@ export interface Event {
   organizerIdNumber: string
   // Event basics
   name: string
-  firstName: string
-  lastName: string
   date: string
   location: string
   expectedAttendance: number
@@ -60,6 +58,17 @@ export interface Event {
   usageType: UsageType
   usageAreaSqm: number
   usageDays: number
+  // Services
+  insuranceWanted: boolean
+  insuranceProviderId: string
+  logisticsWanted: boolean
+  logisticsProviderId: string
+  securityWanted: boolean
+  securityProviderId: string
+  sanitaryWanted: boolean
+  sanitaryProviderId: string
+  cateringWanted: boolean
+  cateringProviderId: string
   createdAt: string
   updatedAt: string
 }
@@ -119,8 +128,6 @@ export interface EventFormValues {
   organizerIdNumber: string
   // Event basics
   name: string
-  firstName: string
-  lastName: string
   date: string
   location: string
   expectedAttendance: number
@@ -142,6 +149,17 @@ export interface EventFormValues {
   usageType: UsageType
   usageAreaSqm: number
   usageDays: number
+  // Services
+  insuranceWanted: boolean
+  insuranceProviderId: string
+  logisticsWanted: boolean
+  logisticsProviderId: string
+  securityWanted: boolean
+  securityProviderId: string
+  sanitaryWanted: boolean
+  sanitaryProviderId: string
+  cateringWanted: boolean
+  cateringProviderId: string
 }
 
 export interface RequiredDocument {
