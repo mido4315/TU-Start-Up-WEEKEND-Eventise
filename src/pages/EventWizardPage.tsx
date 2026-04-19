@@ -17,6 +17,7 @@ import {
 } from '../utils/localizedContent'
 import { generateRequirements } from '../utils/rulesEngine'
 
+// temp comment
 const TOTAL_STEPS = 7
 
 const initialForm: EventFormValues = {
