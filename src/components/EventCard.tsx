@@ -44,23 +44,13 @@ export function EventCard({ event, progress }: EventCardProps) {
           <ProgressBar value={progress.readiness} />
         </div>
 
-        <div className="grid gap-3 text-sm text-slate-600 sm:grid-cols-2">
-          <div className="rounded-2xl bg-slate-50/80 p-3">
-            <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
-              {t('common.blockers')}
-            </p>
-            <p className="mt-2 text-lg font-semibold text-slate-900">
-              {progress.blockers.length}
-            </p>
-          </div>
-          <div className="rounded-2xl bg-slate-50/80 p-3">
-            <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
-              {t('common.attendance')}
-            </p>
-            <p className="mt-2 text-lg font-semibold text-slate-900">
-              {event.expectedAttendance}
-            </p>
-          </div>
+        <div className="rounded-2xl bg-slate-50/80 p-3">
+          <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
+            {t('common.attendance')}
+          </p>
+          <p className="mt-2 text-lg font-semibold text-slate-900">
+            {event.expectedAttendance}
+          </p>
         </div>
 
         <div className="mt-auto flex flex-wrap gap-3">

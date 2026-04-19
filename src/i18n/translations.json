@@ -14,7 +14,6 @@
       "status": "Status",
       "notes": "Notizen",
       "documents": "Dokumente",
-      "blockers": "Blocker",
       "readiness": "Bereitschaft",
       "attendance": "Teilnehmer",
       "workspace": "Workspace",
@@ -28,13 +27,11 @@
     },
     "home": {
       "title": "Alle Veranstaltungen auf einen Blick",
-      "description": "Bereitschaft, Blocker, Fristen und nächste Schritte – Genehmigungen, Anbieter, Personal und Unterlagen an einem Ort.",
+      "description": "Bereitschaft, Fristen und nächste Schritte – Genehmigungen, Anbieter, Personal und Unterlagen an einem Ort.",
       "eventsLabel": "Veranstaltungen",
       "eventsDetail": "Gespeicherte Veranstaltungen im Workspace.",
-      "readinessLabel": "Durchschn. Bereitschaft",
+      "readinessLabel": "Durchschn. Fortschritt",
       "readinessDetail": "Durchschnittlicher Fortschritt über Checkliste und Dokumente.",
-      "blockersLabel": "Aktive Blocker",
-      "blockersDetail": "Offene Blocker, die noch Nachverfolgung erfordern.",
       "emptyTitle": "Noch keine Veranstaltungen",
       "emptyDescription": "Erste Veranstaltung anlegen, um Anforderungen, Fristen und Dokumenten-Tracking zu generieren."
     },
@@ -46,15 +43,6 @@
     "eventHeader": {
       "eyebrow": "Veranstaltungs-Workspace",
       "uploaded": "hochgeladen"
-    },
-    "blockers": {
-      "title": "Aktuelle Blocker",
-      "eyebrow": "Risiken",
-      "emptyTitle": "Keine Blocker vorhanden",
-      "emptyDescription": "Die Veranstaltung hat keine aktiven Blocker auf Basis der aktuellen Anforderungen und Dokumente.",
-      "waiting": "Wartet auf externe Rückmeldung, bevor es weitergehen kann.",
-      "actionRequired": "Veranstalter-Handlung für diese Anforderung noch erforderlich.",
-      "missingDocument": "Ein erforderliches Dokument ist als fehlend markiert."
     },
     "deadlines": {
       "title": "Anstehende Fristen",
@@ -110,7 +98,6 @@
       "checklistProgress": "Checklisten-Fortschritt",
       "checklistDetail": "Als erledigt markierte Anforderungen.",
       "documentsDetail": "In den Workspace hochgeladene Dokumente.",
-      "blockersDetail": "Offene Blocker, die noch gelöst werden müssen.",
       "summary": "Veranstaltungsübersicht",
       "organizer": "Veranstalter",
       "noOrganizer": "Noch kein Veranstalter",
@@ -394,7 +381,6 @@
       "status": "Status",
       "notes": "Notes",
       "documents": "Documents",
-      "blockers": "Blockers",
       "readiness": "Readiness",
       "attendance": "Attendance",
       "workspace": "Workspace",
@@ -408,13 +394,11 @@
     },
     "home": {
       "title": "All events in one place",
-      "description": "Readiness, blockers, deadlines, and next steps – permits, vendors, staffing, and documents in one place.",
+      "description": "Readiness, deadlines, and next steps – permits, vendors, staffing, and documents in one place.",
       "eventsLabel": "Events",
       "eventsDetail": "Saved events in the workspace.",
       "readinessLabel": "Avg. readiness",
       "readinessDetail": "Average progress across checklist and documents.",
-      "blockersLabel": "Active blockers",
-      "blockersDetail": "Open blockers that still need follow-up.",
       "emptyTitle": "No events yet",
       "emptyDescription": "Create your first event to generate requirements, deadlines, and document tracking."
     },
@@ -426,15 +410,6 @@
     "eventHeader": {
       "eyebrow": "Event workspace",
       "uploaded": "uploaded"
-    },
-    "blockers": {
-      "title": "Current blockers",
-      "eyebrow": "Risks",
-      "emptyTitle": "No blockers right now",
-      "emptyDescription": "This event has no active blockers based on its current requirements and documents.",
-      "waiting": "Waiting on an external update before it can move forward.",
-      "actionRequired": "Organizer action is still required for this requirement.",
-      "missingDocument": "A required document is marked as missing."
     },
     "deadlines": {
       "title": "Upcoming deadlines",
@@ -490,7 +465,6 @@
       "checklistProgress": "Checklist progress",
       "checklistDetail": "Requirements marked as completed.",
       "documentsDetail": "Documents uploaded to the workspace.",
-      "blockersDetail": "Open blockers that still need to be resolved.",
       "summary": "Event summary",
       "organizer": "Organizer",
       "noOrganizer": "No organizer yet",

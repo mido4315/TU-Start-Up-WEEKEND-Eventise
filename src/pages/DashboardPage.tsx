@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { BlockerList } from '../components/BlockerList'
 import { DeadlineList } from '../components/DeadlineList'
 import { EmptyState } from '../components/EmptyState'
 import { EventCard } from '../components/EventCard'
@@ -13,7 +12,7 @@ export function DashboardPage() {
   const events = useEventStore((state) => state.events)
   const requirements = useEventStore((state) => state.requirements)
   const documents = useEventStore((state) => state.documents)
-  const { language, t } = useTranslation()
+  const { t } = useTranslation()
 
   const eventsWithProgress = [...events]
     .map((event) => ({
@@ -21,7 +20,6 @@ export function DashboardPage() {
       progress: buildEventProgress(
         requirements.filter((item) => item.eventId === event.id),
         documents.filter((item) => item.eventId === event.id),
-        language,
       ),
     }))
     .sort(
@@ -49,13 +47,6 @@ export function DashboardPage() {
     )
     .slice(0, 6)
 
-  const blockers = eventsWithProgress.flatMap(({ event, progress }) =>
-    progress.blockers.map((blocker) => ({
-      ...blocker,
-      detail: `${event.name}: ${blocker.detail}`,
-    })),
-  )
-
   return (
     <div className="space-y-8">
       <PageHeader
@@ -72,7 +63,7 @@ export function DashboardPage() {
         }
       />
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2">
         <MetricCard
           detail={t('home.eventsDetail')}
           label={t('home.eventsLabel')}
@@ -82,11 +73,6 @@ export function DashboardPage() {
           detail={t('home.readinessDetail')}
           label={t('home.readinessLabel')}
           value={`${averageReadiness}%`}
-        />
-        <MetricCard
-          detail={t('home.blockersDetail')}
-          label={t('common.blockers')}
-          value={String(blockers.length)}
         />
       </div>
 
@@ -116,7 +102,6 @@ export function DashboardPage() {
 
         <div className="space-y-6">
           <DeadlineList items={upcomingDeadlines} />
-          <BlockerList blockers={blockers} />
         </div>
       </div>
     </div>

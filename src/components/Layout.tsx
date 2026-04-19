@@ -6,7 +6,7 @@ function FlagIcon() {
   return (
     <svg
       aria-hidden="true"
-      className="h-4 w-4"
+      className="h-6 w-6"
       fill="none"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +34,7 @@ export function Layout() {
     <div className="app-shell panel-grid">
       <div className="fixed right-4 top-4 z-50">
         <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 p-1.5 shadow-lg backdrop-blur">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-50 text-brand-800">
+          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-50 text-brand-800">
             <FlagIcon />
           </span>
           <button

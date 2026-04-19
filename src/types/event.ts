@@ -103,19 +103,12 @@ export interface CategoryProgress {
   readiness: number
 }
 
-export interface EventBlocker {
-  id: string
-  title: string
-  detail: string
-}
-
 export interface EventProgress {
   readiness: number
   completedRequirements: number
   totalRequirements: number
   uploadedDocuments: number
   totalDocuments: number
-  blockers: EventBlocker[]
   upcomingDeadlines: Requirement[]
   nextActions: Requirement[]
   categoryProgress: CategoryProgress[]

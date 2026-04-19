@@ -1,5 +1,4 @@
 import { Link, useParams } from 'react-router-dom'
-import { BlockerList } from '../components/BlockerList'
 import { CategoryProgressList } from '../components/CategoryProgressList'
 import { DeadlineList } from '../components/DeadlineList'
 import { EmptyState } from '../components/EmptyState'
@@ -37,34 +36,21 @@ export function EventWorkspacePage() {
     <div className="space-y-8">
       <EventHeader event={event} progress={progress} />
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-3">
         <MetricCard
-          detail={
-            t('workspacePage.readinessDetail')
-          }
+          detail={t('workspacePage.readinessDetail')}
           label={t('common.readiness')}
           value={`${progress.readiness}%`}
         />
         <MetricCard
-          detail={
-            t('workspacePage.checklistDetail')
-          }
+          detail={t('workspacePage.checklistDetail')}
           label={t('workspacePage.checklistProgress')}
           value={`${progress.completedRequirements}/${progress.totalRequirements}`}
         />
         <MetricCard
-          detail={
-            t('workspacePage.documentsDetail')
-          }
+          detail={t('workspacePage.documentsDetail')}
           label={t('common.documents')}
           value={`${progress.uploadedDocuments}/${progress.totalDocuments || 0}`}
-        />
-        <MetricCard
-          detail={
-            t('workspacePage.blockersDetail')
-          }
-          label={t('common.blockers')}
-          value={String(progress.blockers.length)}
         />
       </div>
 
@@ -112,7 +98,6 @@ export function EventWorkspacePage() {
 
         <div className="space-y-6">
           <NextActionsPanel actions={progress.nextActions} eventId={event.id} />
-          <BlockerList blockers={progress.blockers} />
 
           <div className="rounded-3xl border border-white/70 bg-white/80 p-5 shadow-panel backdrop-blur">
             <div className="flex items-center justify-between gap-3">

@@ -29,21 +29,13 @@ export function EventHeader({ event, progress }: EventHeaderProps) {
 
       <div className="rounded-3xl border border-white/70 bg-white/75 p-5 shadow-panel backdrop-blur">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="grid gap-3 text-sm text-slate-600 sm:grid-cols-3">
+          <div className="grid gap-3 text-sm text-slate-600 sm:grid-cols-2">
             <div>
               <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
                 {t('common.attendance')}
               </p>
               <p className="mt-1 text-lg font-semibold text-slate-950">
                 {event.expectedAttendance}
-              </p>
-            </div>
-            <div>
-              <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
-                {t('common.blockers')}
-              </p>
-              <p className="mt-1 text-lg font-semibold text-slate-950">
-                {progress.blockers.length}
               </p>
             </div>
             <div>

@@ -1,14 +1,10 @@
-import type { AppLanguage } from '../i18n/types'
-import { translate } from '../i18n/translate'
 import type {
   CategoryProgress,
-  EventBlocker,
   EventDocument,
   EventProgress,
   Requirement,
   RequirementCategory,
 } from '../types/event'
-import { getEventDocumentDisplay, getRequirementDisplay } from './localizedContent'
 
 const categoryOrder: RequirementCategory[] = [
   'permits',
@@ -49,41 +45,9 @@ function buildCategoryProgress(requirements: Requirement[]): CategoryProgress[] 
     .filter((item): item is CategoryProgress => item !== null)
 }
 
-function buildBlockers(
-  requirements: Requirement[],
-  documents: EventDocument[],
-  language: AppLanguage,
-): EventBlocker[] {
-  const requirementBlockers = requirements
-    .filter((item) => item.actionRequired && item.status !== 'completed')
-    .map((item) => {
-      const display = getRequirementDisplay(item, language)
-
-      return {
-        id: item.id,
-        title: display.title,
-        detail:
-          item.status === 'waiting'
-            ? translate(language, 'blockers.waiting')
-            : translate(language, 'blockers.actionRequired'),
-      }
-    })
-
-  const documentBlockers = documents
-    .filter((item) => item.status === 'missing')
-    .map((item) => ({
-      id: item.id,
-      title: getEventDocumentDisplay(item, language).title,
-      detail: translate(language, 'blockers.missingDocument'),
-    }))
-
-  return [...requirementBlockers, ...documentBlockers]
-}
-
 export function buildEventProgress(
   requirements: Requirement[],
   documents: EventDocument[],
-  language: AppLanguage = 'de',
 ): EventProgress {
   const completedRequirements = requirements.filter(
     (item) => item.status === 'completed',
@@ -100,7 +64,6 @@ export function buildEventProgress(
     totalRequirements: requirements.length,
     uploadedDocuments,
     totalDocuments: documents.length,
-    blockers: buildBlockers(requirements, documents, language),
     upcomingDeadlines: sortByDueDate(
       requirements.filter((item) => item.status !== 'completed'),
     ).slice(0, 5),
