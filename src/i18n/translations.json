@@ -158,13 +158,32 @@
       "assistant": "Assistent",
       "step": "Schritt {{step}} von {{total}} – {{label}}",
       "steps": {
+        "organizer": "Veranstalter",
         "basics": "Grunddaten",
         "traffic": "Fläche & Verkehr",
         "risks": "Risikofaktoren",
+        "services": "Dienstleister",
         "documents": "Unterlagen",
         "fees": "Gebühren",
         "review": "Übersicht & Einreichen"
       },
+      "organizerIntro": "Diese Angaben werden für die offizielle Veranstaltungsanmeldung benötigt. Die Personalausweisnummer ist für das spätere PostIdent-Verfahren relevant.",
+      "organizerFields": {
+        "firstName": "Vorname",
+        "lastName": "Nachname",
+        "address": "Adresse",
+        "phone": "Telefonnummer",
+        "idNumber": "Personalausweisnummer"
+      },
+      "organizerPlaceholders": {
+        "firstName": "Maria",
+        "lastName": "Mustermann",
+        "address": "Musterstraße 1, 44137 Dortmund",
+        "phone": "+49 231 123456",
+        "idNumber": "L01X00T47 (für PostIdent)"
+      },
+      "organizerPrivacyTitle": "Datenschutz:",
+      "organizerPrivacyText": "Ihre Daten werden ausschließlich lokal gespeichert und nicht an Dritte übertragen.",
       "fields": {
         "eventName": "Veranstaltungsname",
         "firstName": "Vorname",
@@ -186,6 +205,29 @@
         "usageType": "Nutzungsart",
         "area": "Fläche (m²)",
         "days": "Anzahl Tage"
+      },
+      "mapPicker": {
+        "emptyLocation": "Ort über Karte auswählen",
+        "emptyAddress": "Adresse über Karte auswählen",
+        "open": "Karte öffnen",
+        "title": "Ort auf Beispielkarte auswählen",
+        "subtitle": "Dies ist eine Demo-Karte mit Beispielorten. Die Auswahl wird als Veranstaltungsort gespeichert.",
+        "close": "Schließen",
+        "select": "Auswählen",
+        "locations": {
+          "marketSquare": {
+            "name": "Alter Markt, Dortmund",
+            "detail": "Zentraler Platz für Märkte und Nachbarschaftstreffen."
+          },
+          "riversidePark": {
+            "name": "Phoenixsee-Promenade",
+            "detail": "Offene Fläche am Wasser mit guter Laufkundschaft."
+          },
+          "communityHall": {
+            "name": "Bürgerhaus Nordstadt",
+            "detail": "Community-orientierter Innen- und Außenbereich."
+          }
+        }
       },
       "toggles": {
         "publicVenue": ["Öffentliche Fläche", "Straßenbereich, Platz oder Park in städtischem Besitz."],
@@ -246,6 +288,18 @@
       "contactTitle": "Kontakt & Einreichung",
       "phone": "Telefon",
       "address": "Adresse",
+      "authorityLabel": "Ordnungsamt",
+      "faxLabel": "Fax",
+      "organizerReviewTitle": "Veranstalter",
+      "organizerReviewLabels": {
+        "firstName": "Vorname",
+        "lastName": "Nachname",
+        "address": "Adresse",
+        "phone": "Telefon",
+        "idNumber": "Personalausweis-Nr."
+      },
+      "organizerReviewMissing": "–",
+      "organizerReviewNoId": "(noch nicht angegeben)",
       "rulesEngine": "Rules Engine",
       "rulesTitle": "Regelwerk",
       "show": "Einblenden",
@@ -448,13 +502,32 @@
       "assistant": "Wizard",
       "step": "Step {{step}} of {{total}} – {{label}}",
       "steps": {
+        "organizer": "Organizer",
         "basics": "Basics",
         "traffic": "Space & traffic",
         "risks": "Risk factors",
+        "services": "Service providers",
         "documents": "Documents",
         "fees": "Fees",
         "review": "Review & submit"
       },
+      "organizerIntro": "These details are required for the official event registration. The ID number is relevant for the later identity verification process.",
+      "organizerFields": {
+        "firstName": "First name",
+        "lastName": "Last name",
+        "address": "Address",
+        "phone": "Phone number",
+        "idNumber": "ID number"
+      },
+      "organizerPlaceholders": {
+        "firstName": "Maria",
+        "lastName": "Miller",
+        "address": "Sample Street 1, 44137 Dortmund",
+        "phone": "+49 231 123456",
+        "idNumber": "L01X00T47 (for identity check)"
+      },
+      "organizerPrivacyTitle": "Privacy:",
+      "organizerPrivacyText": "Your data is stored locally only and is not shared with third parties.",
       "fields": {
         "eventName": "Event name",
         "firstName": "First name",
@@ -476,6 +549,29 @@
         "usageType": "Usage type",
         "area": "Area (m²)",
         "days": "Number of days"
+      },
+      "mapPicker": {
+        "emptyLocation": "Choose a location on the map",
+        "emptyAddress": "Choose an address on the map",
+        "open": "Open map",
+        "title": "Choose a location on the demo map",
+        "subtitle": "This is a demo map with sample places. The selected place will be saved as the event location.",
+        "close": "Close",
+        "select": "Select",
+        "locations": {
+          "marketSquare": {
+            "name": "Old Market, Dortmund",
+            "detail": "Central square for markets and neighborhood gatherings."
+          },
+          "riversidePark": {
+            "name": "Phoenix Lake Promenade",
+            "detail": "Open waterfront area with strong foot traffic."
+          },
+          "communityHall": {
+            "name": "North City Community Hall",
+            "detail": "Community-focused indoor and outdoor event space."
+          }
+        }
       },
       "toggles": {
         "publicVenue": ["Public space", "Street area, square, or park owned by the city."],
@@ -536,6 +632,18 @@
       "contactTitle": "Contact & submission",
       "phone": "Phone",
       "address": "Address",
+      "authorityLabel": "Public order office",
+      "faxLabel": "Fax",
+      "organizerReviewTitle": "Organizer",
+      "organizerReviewLabels": {
+        "firstName": "First name",
+        "lastName": "Last name",
+        "address": "Address",
+        "phone": "Phone",
+        "idNumber": "ID number"
+      },
+      "organizerReviewMissing": "–",
+      "organizerReviewNoId": "(not provided yet)",
       "rulesEngine": "Rules Engine",
       "rulesTitle": "Rule set",
       "show": "Show",
