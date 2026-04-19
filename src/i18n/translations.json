@@ -241,6 +241,28 @@
           "popular": "Beliebt",
           "recommended": "Empfohlen",
           "new": "Neu"
+        },
+        "categories": {
+          "insurance": {
+            "label": "Versicherung",
+            "description": "Veranstalterhaftpflicht, Ausfall- und Wetterversicherung."
+          },
+          "logistics": {
+            "label": "Logistik",
+            "description": "Auf- und Abbau, Materiallieferung, Bühnentechnik und Equipment-Transport."
+          },
+          "security": {
+            "label": "Security",
+            "description": "Ordnerdienst, Einlasskontrolle, Personenschutz und Objektsicherung."
+          },
+          "sanitary": {
+            "label": "Sanitätsdienst",
+            "description": "Medizinische Absicherung, Erstversorgung und Sanitätspersonal."
+          },
+          "catering": {
+            "label": "Gastronomie",
+            "description": "Catering, Food Trucks, Getränkeversorgung und Servicepersonal."
+          }
         }
       },
       "toggles": {
@@ -599,6 +621,28 @@
           "popular": "Popular",
           "recommended": "Recommended",
           "new": "New"
+        },
+        "categories": {
+          "insurance": {
+            "label": "Insurance",
+            "description": "Organizer liability, cancellation, and weather insurance."
+          },
+          "logistics": {
+            "label": "Logistics",
+            "description": "Setup, teardown, material delivery, stage technology, and equipment transport."
+          },
+          "security": {
+            "label": "Security",
+            "description": "Stewards, access control, personal protection, and site security."
+          },
+          "sanitary": {
+            "label": "Medical service",
+            "description": "Medical coverage, first aid, and medical staff."
+          },
+          "catering": {
+            "label": "Catering",
+            "description": "Catering, food trucks, beverage supply, and service staff."
+          }
         }
       },
       "toggles": {

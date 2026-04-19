@@ -461,6 +461,10 @@ export function EventWizardPage() {
                 const providerKey = `${category.key}ProviderId` as keyof EventFormValues
                 const isWanted = form[wantedKey] as boolean
                 const selectedId = form[providerKey] as string
+                const categoryLabel = t(`wizard.services.categories.${category.key}.label`)
+                const categoryDescription = t(
+                  `wizard.services.categories.${category.key}.description`,
+                )
 
                 return (
                   <div key={category.key} className="overflow-hidden rounded-3xl border border-slate-200 bg-white">
@@ -477,10 +481,10 @@ export function EventWizardPage() {
                       <span className="text-2xl">{category.icon}</span>
                       <div className="flex-1">
                         <p className={`font-semibold ${isWanted ? 'text-white' : 'text-slate-900'}`}>
-                          {category.label}
+                          {categoryLabel}
                         </p>
                         <p className={`mt-0.5 text-sm ${isWanted ? 'text-slate-300' : 'text-slate-500'}`}>
-                          {category.description}
+                          {categoryDescription}
                         </p>
                       </div>
                       <span className={`shrink-0 rounded-full border px-3 py-1 text-xs font-semibold transition ${
@@ -841,11 +845,15 @@ export function EventWizardPage() {
                       .map((category) => {
                         const providerId = form[`${category.key}ProviderId` as keyof EventFormValues] as string
                         const provider = category.providers.find((p) => p.id === providerId)
+                        const categoryLabel = t(`wizard.services.categories.${category.key}.label`)
+
                         return (
                           <div key={category.key} className="flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50/80 p-4">
                             <span className="mt-0.5 text-xl">{category.icon}</span>
                             <div>
-                              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">{category.label}</p>
+                              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                                {categoryLabel}
+                              </p>
                               {provider ? (
                                 <>
                                   <p className="mt-1 font-medium text-slate-900">{provider.name}</p>
