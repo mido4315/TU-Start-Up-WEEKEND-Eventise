@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
-import { useLanguage } from '../i18n/useLanguage'
+import { useTranslation } from '../i18n/useTranslation'
 import type { Requirement } from '../types/event'
 import { formatDate } from '../utils/format'
+import { getRequirementDisplay } from '../utils/localizedContent'
 import { Card } from './Card'
 import { StatusBadge } from './StatusBadge'
 
@@ -11,27 +12,24 @@ interface NextActionsPanelProps {
 }
 
 export function NextActionsPanel({ eventId, actions }: NextActionsPanelProps) {
-  const { language } = useLanguage()
-  const isGerman = language === 'de'
+  const { language, t } = useTranslation()
 
   return (
     <Card
-      title={isGerman ? 'Nächste Schritte' : 'Next actions'}
-      eyebrow={isGerman ? 'Umsetzung' : 'Execution'}
+      title={t('nextActions.title')}
+      eyebrow={t('nextActions.eyebrow')}
       action={
         <Link
           className="rounded-full border border-brand-200 px-4 py-2 text-sm font-semibold text-brand-800 transition hover:border-brand-400 hover:bg-brand-50"
           to={`/events/${eventId}/checklist`}
         >
-          {isGerman ? 'Checkliste öffnen' : 'Open checklist'}
+          {t('nextActions.openChecklist')}
         </Link>
       }
     >
       {actions.length === 0 ? (
         <p className="text-sm text-slate-500">
-          {isGerman
-            ? 'Alle offenen Punkte sind derzeit erledigt.'
-            : 'Everything requiring action is complete for now.'}
+          {t('nextActions.empty')}
         </p>
       ) : (
         <div className="space-y-3">
@@ -41,14 +39,16 @@ export function NextActionsPanel({ eventId, actions }: NextActionsPanelProps) {
               className="rounded-2xl border border-brand-100 bg-brand-50/70 p-4"
             >
               <div className="flex flex-wrap items-center gap-2">
-                <h3 className="font-semibold text-slate-900">{item.title}</h3>
+                <h3 className="font-semibold text-slate-900">
+                  {getRequirementDisplay(item, language).title}
+                </h3>
                 <StatusBadge
-                  label={isGerman ? 'Handlung erforderlich' : 'Action required'}
+                  label={t('nextActions.actionRequired')}
                   tone="warning"
                 />
               </div>
               <p className="mt-2 text-sm text-slate-600">
-                {isGerman ? 'Fällig' : 'Due'} {formatDate(item.dueDate, language)}
+                {t('common.due')} {formatDate(item.dueDate, language)}
               </p>
             </article>
           ))}

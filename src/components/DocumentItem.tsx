@@ -1,7 +1,11 @@
-import { useLanguage } from '../i18n/useLanguage'
+import { useTranslation } from '../i18n/useTranslation'
 import type { EventDocument, Requirement } from '../types/event'
 import { documentStatusOptions } from '../utils/constants'
 import { formatDocumentStatus } from '../utils/format'
+import {
+  getEventDocumentDisplay,
+  getRequirementDisplay,
+} from '../utils/localizedContent'
 import { Card } from './Card'
 import { StatusBadge } from './StatusBadge'
 
@@ -20,8 +24,8 @@ export function DocumentItem({
   onNotesChange,
   onLinksChange,
 }: DocumentItemProps) {
-  const { language } = useLanguage()
-  const isGerman = language === 'de'
+  const { language, t } = useTranslation()
+  const display = getEventDocumentDisplay(document, language)
 
   return (
     <Card className="border-slate-100 bg-white/85">
@@ -29,7 +33,7 @@ export function DocumentItem({
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <h3 className="text-lg font-semibold text-slate-950">{document.title}</h3>
+              <h3 className="text-lg font-semibold text-slate-950">{display.title}</h3>
               <StatusBadge
                 label={formatDocumentStatus(document.status, language)}
                 tone={
@@ -41,11 +45,11 @@ export function DocumentItem({
                 }
               />
             </div>
-            <p className="mt-2 text-sm text-slate-600">{document.type}</p>
+            <p className="mt-2 text-sm text-slate-600">{display.type}</p>
           </div>
 
           <label className="text-sm font-medium text-slate-600">
-            {isGerman ? 'Status' : 'Status'}
+            {t('common.status')}
             <select
               className="mt-2 block rounded-2xl border border-slate-200 bg-white px-4 py-2 text-slate-900 outline-none transition focus:border-brand-500"
               onChange={(event) =>
@@ -63,23 +67,20 @@ export function DocumentItem({
         </div>
 
         <label className="text-sm font-medium text-slate-600">
-          {isGerman ? 'Notizen' : 'Notes'}
+          {t('common.notes')}
           <textarea
             className="mt-2 min-h-24 w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-slate-900 outline-none transition focus:border-brand-500 focus:bg-white"
             defaultValue={document.notes}
             onBlur={(event) => onNotesChange(event.target.value)}
             placeholder={
-              isGerman
-                ? 'Upload-Status, Zuständigkeit oder fehlende Details vermerken…'
-                : 'Track upload status, owner, or missing details…'
+              t('documentItem.notesPlaceholder')
             }
           />
         </label>
 
         <details className="rounded-2xl border border-slate-100 bg-slate-50/70 p-4">
           <summary className="cursor-pointer text-sm font-semibold text-slate-900">
-            {isGerman ? 'Verknüpfte Anforderungen' : 'Linked requirements'} (
-            {document.linkedRequirementIds.length})
+            {t('documentItem.linkedRequirements')} ({document.linkedRequirementIds.length})
           </summary>
           <div className="mt-3 grid gap-2 md:grid-cols-2">
             {requirements.map((requirement) => {
@@ -104,7 +105,7 @@ export function DocumentItem({
                     }}
                     type="checkbox"
                   />
-                  <span>{requirement.title}</span>
+                  <span>{getRequirementDisplay(requirement, language).title}</span>
                 </label>
               )
             })}

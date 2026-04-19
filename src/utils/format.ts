@@ -1,4 +1,5 @@
 import type { AppLanguage } from '../i18n/types'
+import { translate } from '../i18n/translate'
 import type { DocumentStatus, RequirementStatus } from '../types/event'
 
 export function cn(...values: Array<string | false | null | undefined>) {
@@ -17,49 +18,21 @@ export function formatBooleanValue(
   value: boolean,
   language: AppLanguage = 'de',
 ) {
-  return value ? (language === 'de' ? 'Ja' : 'Yes') : language === 'de' ? 'Nein' : 'No'
+  return value ? translate(language, 'common.yes') : translate(language, 'common.no')
 }
 
 export function formatRequirementStatus(
   status: RequirementStatus,
   language: AppLanguage = 'de',
 ) {
-  const labels: Record<AppLanguage, Record<RequirementStatus, string>> = {
-    de: {
-      not_started: 'nicht gestartet',
-      in_progress: 'in Bearbeitung',
-      waiting: 'wartet',
-      completed: 'erledigt',
-    },
-    en: {
-      not_started: 'not started',
-      in_progress: 'in progress',
-      waiting: 'waiting',
-      completed: 'completed',
-    },
-  }
-
-  return labels[language][status]
+  return translate(language, `statuses.requirements.${status}`)
 }
 
 export function formatDocumentStatus(
   status: DocumentStatus,
   language: AppLanguage = 'de',
 ) {
-  const labels: Record<AppLanguage, Record<DocumentStatus, string>> = {
-    de: {
-      pending: 'ausstehend',
-      uploaded: 'hochgeladen',
-      missing: 'fehlend',
-    },
-    en: {
-      pending: 'pending',
-      uploaded: 'uploaded',
-      missing: 'missing',
-    },
-  }
-
-  return labels[language][status]
+  return translate(language, `statuses.documents.${status}`)
 }
 
 export function formatRelativeDate(
@@ -81,24 +54,22 @@ export function formatRelativeDate(
   const diffDays = Math.round((targetUtc - todayUtc) / 86400000)
 
   if (diffDays === 0) {
-    return language === 'de' ? 'Heute fällig' : 'Due today'
+    return translate(language, 'deadlines.today')
   }
 
   if (diffDays > 0) {
-    if (language === 'de') {
-      return `Fällig in ${diffDays} Tag${diffDays === 1 ? '' : 'en'}`
-    }
-
-    return `Due in ${diffDays} day${diffDays === 1 ? '' : 's'}`
+    return translate(language, 'deadlines.inDays', {
+      count: diffDays,
+      plural: language === 'de' ? (diffDays === 1 ? '' : 'en') : diffDays === 1 ? '' : 's',
+    })
   }
 
   const overdue = Math.abs(diffDays)
 
-  if (language === 'de') {
-    return `${overdue} Tag${overdue === 1 ? '' : 'e'} überfällig`
-  }
-
-  return `${overdue} day${overdue === 1 ? '' : 's'} overdue`
+  return translate(language, 'deadlines.overdue', {
+    count: overdue,
+    plural: language === 'de' ? (overdue === 1 ? '' : 'e') : overdue === 1 ? '' : 's',
+  })
 }
 
 export function slugify(value: string) {

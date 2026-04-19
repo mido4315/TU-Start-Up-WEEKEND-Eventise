@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useLanguage } from '../i18n/useLanguage'
+import { useTranslation } from '../i18n/useTranslation'
 import type { Event, EventProgress } from '../types/event'
 import { formatDate } from '../utils/format'
 import { Card } from './Card'
@@ -12,8 +12,7 @@ interface EventCardProps {
 }
 
 export function EventCard({ event, progress }: EventCardProps) {
-  const { language } = useLanguage()
-  const isGerman = language === 'de'
+  const { language, t } = useTranslation()
 
   return (
     <Card className="h-full">
@@ -29,17 +28,17 @@ export function EventCard({ event, progress }: EventCardProps) {
             <p className="mt-2 text-sm text-slate-600">{event.location}</p>
           </div>
           <StatusBadge
-            label={`${progress.readiness}% ${isGerman ? 'bereit' : 'ready'}`}
+            label={`${progress.readiness}% ${t('eventCard.ready')}`}
             tone={progress.readiness >= 70 ? 'success' : progress.readiness >= 40 ? 'warning' : 'danger'}
           />
         </div>
 
         <div>
           <div className="mb-2 flex items-center justify-between gap-3 text-sm text-slate-500">
-            <span>{isGerman ? 'Bereitschaft' : 'Readiness'}</span>
+            <span>{t('common.readiness')}</span>
             <span>
               {progress.completedRequirements}/{progress.totalRequirements}{' '}
-              {isGerman ? 'Anforderungen erledigt' : 'requirements completed'}
+              {t('eventCard.requirementsCompleted')}
             </span>
           </div>
           <ProgressBar value={progress.readiness} />
@@ -48,7 +47,7 @@ export function EventCard({ event, progress }: EventCardProps) {
         <div className="grid gap-3 text-sm text-slate-600 sm:grid-cols-2">
           <div className="rounded-2xl bg-slate-50/80 p-3">
             <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
-              {isGerman ? 'Blocker' : 'Blockers'}
+              {t('common.blockers')}
             </p>
             <p className="mt-2 text-lg font-semibold text-slate-900">
               {progress.blockers.length}
@@ -56,7 +55,7 @@ export function EventCard({ event, progress }: EventCardProps) {
           </div>
           <div className="rounded-2xl bg-slate-50/80 p-3">
             <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
-              {isGerman ? 'Teilnehmer' : 'Attendance'}
+              {t('common.attendance')}
             </p>
             <p className="mt-2 text-lg font-semibold text-slate-900">
               {event.expectedAttendance}
@@ -69,13 +68,13 @@ export function EventCard({ event, progress }: EventCardProps) {
             className="rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
             to={`/events/${event.id}`}
           >
-            {isGerman ? 'Workspace öffnen' : 'Open workspace'}
+            {t('eventCard.openWorkspace')}
           </Link>
           <Link
             className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-brand-300 hover:bg-brand-50"
             to={`/events/${event.id}/documents`}
           >
-            {isGerman ? 'Dokumente' : 'Documents'}
+            {t('common.documents')}
           </Link>
         </div>
       </div>

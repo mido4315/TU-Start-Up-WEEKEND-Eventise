@@ -1,4 +1,4 @@
-import { useLanguage } from '../i18n/useLanguage'
+import { useTranslation } from '../i18n/useTranslation'
 import type { Requirement } from '../types/event'
 import { getCategoryLabel, requirementStatusOptions } from '../utils/constants'
 import {
@@ -6,6 +6,7 @@ import {
   formatRelativeDate,
   formatRequirementStatus,
 } from '../utils/format'
+import { getRequirementDisplay } from '../utils/localizedContent'
 import { Card } from './Card'
 import { StatusBadge } from './StatusBadge'
 
@@ -20,8 +21,8 @@ export function RequirementItem({
   onStatusChange,
   onNotesChange,
 }: RequirementItemProps) {
-  const { language } = useLanguage()
-  const isGerman = language === 'de'
+  const { language, t } = useTranslation()
+  const display = getRequirementDisplay(requirement, language)
 
   return (
     <Card className="border-slate-100 bg-white/85">
@@ -30,7 +31,7 @@ export function RequirementItem({
           <div>
             <div className="flex flex-wrap items-center gap-2">
               <h3 className="text-lg font-semibold text-slate-950">
-                {requirement.title}
+                {display.title}
               </h3>
               <StatusBadge
                 label={getCategoryLabel(requirement.category, language)}
@@ -38,19 +39,19 @@ export function RequirementItem({
               />
               {requirement.actionRequired && (
                 <StatusBadge
-                  label={isGerman ? 'Handlung nötig' : 'User action'}
+                  label={t('requirementItem.userAction')}
                   tone="warning"
                 />
               )}
             </div>
             <p className="mt-2 text-sm text-slate-600">
-              {isGerman ? 'Fällig' : 'Due'} {formatDate(requirement.dueDate, language)} ·{' '}
+              {t('common.due')} {formatDate(requirement.dueDate, language)} ·{' '}
               {formatRelativeDate(requirement.dueDate, language)}
             </p>
           </div>
 
           <label className="text-sm font-medium text-slate-600">
-            {isGerman ? 'Status' : 'Status'}
+            {t('common.status')}
             <select
               className="mt-2 block rounded-2xl border border-slate-200 bg-white px-4 py-2 text-slate-900 outline-none transition focus:border-brand-500"
               onChange={(event) =>
@@ -68,15 +69,13 @@ export function RequirementItem({
         </div>
 
         <label className="text-sm font-medium text-slate-600">
-          {isGerman ? 'Notizen' : 'Notes'}
+          {t('common.notes')}
           <textarea
             className="mt-2 min-h-24 w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-slate-900 outline-none transition focus:border-brand-500 focus:bg-white"
-            defaultValue={requirement.notes}
+            defaultValue={display.notes}
             onBlur={(event) => onNotesChange(event.target.value)}
             placeholder={
-              isGerman
-                ? 'Folgeschritte, Ansprechpartner oder Wartegründe notieren…'
-                : 'Capture follow-ups, owners, or waiting reasons…'
+              t('requirementItem.notesPlaceholder')
             }
           />
         </label>

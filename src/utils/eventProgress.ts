@@ -1,4 +1,5 @@
 import type { AppLanguage } from '../i18n/types'
+import { translate } from '../i18n/translate'
 import type {
   CategoryProgress,
   EventBlocker,
@@ -7,6 +8,7 @@ import type {
   Requirement,
   RequirementCategory,
 } from '../types/event'
+import { getEventDocumentDisplay, getRequirementDisplay } from './localizedContent'
 
 const categoryOrder: RequirementCategory[] = [
   'permits',
@@ -54,28 +56,25 @@ function buildBlockers(
 ): EventBlocker[] {
   const requirementBlockers = requirements
     .filter((item) => item.actionRequired && item.status !== 'completed')
-    .map((item) => ({
-      id: item.id,
-      title: item.title,
-      detail:
-        item.status === 'waiting'
-          ? language === 'de'
-            ? 'Wartet auf externe Rückmeldung, bevor es weitergehen kann.'
-            : 'Waiting on an external update before it can move forward.'
-          : language === 'de'
-            ? 'Veranstalter-Handlung für diese Anforderung noch erforderlich.'
-            : 'Organizer action is still required for this requirement.',
-    }))
+    .map((item) => {
+      const display = getRequirementDisplay(item, language)
+
+      return {
+        id: item.id,
+        title: display.title,
+        detail:
+          item.status === 'waiting'
+            ? translate(language, 'blockers.waiting')
+            : translate(language, 'blockers.actionRequired'),
+      }
+    })
 
   const documentBlockers = documents
     .filter((item) => item.status === 'missing')
     .map((item) => ({
       id: item.id,
-      title: item.title,
-      detail:
-        language === 'de'
-          ? 'Ein erforderliches Dokument ist als fehlend markiert.'
-          : 'A required document is marked as missing.',
+      title: getEventDocumentDisplay(item, language).title,
+      detail: translate(language, 'blockers.missingDocument'),
     }))
 
   return [...requirementBlockers, ...documentBlockers]

@@ -4,6 +4,8 @@ import { generateRequirements } from '../utils/rulesEngine'
 const riversideEvent: Event = {
   id: 'event-riverside-summer-market',
   name: 'Sommermarkt am Phoenixsee',
+  firstName: 'Mina',
+  lastName: 'Schneider',
   date: '2026-06-14T10:00:00.000Z',
   location: 'Phoenixsee-Promenade, Dortmund',
   expectedAttendance: 420,
@@ -31,6 +33,8 @@ const riversideEvent: Event = {
 
 const studentEvent: Event = {
   id: 'event-student-night-street-festival',
+  firstName: 'Jonas',
+  lastName: 'Weber',
   name: 'Studenten-Straßenfest Nacht',
   date: '2026-07-05T16:00:00.000Z',
   location: 'Campus Süd & Weststraße, Dortmund',

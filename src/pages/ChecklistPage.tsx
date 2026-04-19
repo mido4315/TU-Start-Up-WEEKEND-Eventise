@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import { EmptyState } from '../components/EmptyState'
 import { EventHeader } from '../components/EventHeader'
 import { RequirementItem } from '../components/RequirementItem'
-import { useLanguage } from '../i18n/useLanguage'
+import { useTranslation } from '../i18n/useTranslation'
 import { useEventWorkspace } from '../hooks/useEventWorkspace'
 import { useEventStore } from '../store/useEventStore'
 
@@ -13,24 +13,19 @@ export function ChecklistPage() {
   const updateRequirementStatus = useEventStore(
     (state) => state.updateRequirementStatus,
   )
-  const { language } = useLanguage()
-  const isGerman = language === 'de'
+  const { t } = useTranslation()
 
   if (!event) {
     return (
       <EmptyState
-        title={isGerman ? 'Veranstaltung nicht gefunden' : 'Event not found'}
-        description={
-          isGerman
-            ? 'Die angeforderte Checkliste existiert nicht im lokalen Speicher.'
-            : 'The requested checklist does not exist in local storage.'
-        }
+        title={t('common.eventNotFound')}
+        description={t('checklistPage.missingDescription')}
         action={
           <Link
             className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
             to="/dashboard"
           >
-            {isGerman ? 'Zum Dashboard' : 'Back to dashboard'}
+            {t('common.backToDashboard')}
           </Link>
         }
       />
@@ -50,16 +45,14 @@ export function ChecklistPage() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700/80">
-              {isGerman ? 'Checkliste' : 'Checklist'}
+              {t('common.checklist')}
             </p>
             <h2 className="section-title mt-2 text-2xl font-semibold text-slate-950">
-              {isGerman ? 'Generierte Anforderungen' : 'Generated requirements'}
+              {t('checklistPage.title')}
             </h2>
           </div>
           <p className="text-sm text-slate-600">
-            {isGerman
-              ? 'Status und Notizen aktualisieren, während die Arbeit von Planung zur Umsetzung fortschreitet.'
-              : 'Update statuses and notes as work moves from planning to execution.'}
+            {t('checklistPage.description')}
           </p>
         </div>
       </div>

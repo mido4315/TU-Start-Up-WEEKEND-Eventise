@@ -6,31 +6,27 @@ import { EmptyState } from '../components/EmptyState'
 import { EventHeader } from '../components/EventHeader'
 import { MetricCard } from '../components/MetricCard'
 import { NextActionsPanel } from '../components/NextActionsPanel'
-import { useLanguage } from '../i18n/useLanguage'
+import { useTranslation } from '../i18n/useTranslation'
 import { useEventWorkspace } from '../hooks/useEventWorkspace'
-import { formatBooleanValue } from '../utils/format'
+import { formatBooleanValue, formatDocumentStatus } from '../utils/format'
+import { getEventDocumentDisplay } from '../utils/localizedContent'
 
 export function EventWorkspacePage() {
   const { id } = useParams()
   const { event, documents, progress } = useEventWorkspace(id)
-  const { language } = useLanguage()
-  const isGerman = language === 'de'
+  const { language, t } = useTranslation()
 
   if (!event) {
     return (
       <EmptyState
-        title={isGerman ? 'Veranstaltung nicht gefunden' : 'Event not found'}
-        description={
-          isGerman
-            ? 'Der angeforderte Workspace existiert nicht im lokalen Speicher.'
-            : 'The requested workspace does not exist in local storage.'
-        }
+        title={t('common.eventNotFound')}
+        description={t('workspacePage.missingDescription')}
         action={
           <Link
             className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
             to="/dashboard"
           >
-            {isGerman ? 'Zum Dashboard' : 'Back to dashboard'}
+            {t('common.backToDashboard')}
           </Link>
         }
       />
@@ -44,38 +40,30 @@ export function EventWorkspacePage() {
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <MetricCard
           detail={
-            isGerman
-              ? 'Anforderungen und Dokumente bisher erledigt.'
-              : 'Requirements and documents completed so far.'
+            t('workspacePage.readinessDetail')
           }
-          label={isGerman ? 'Bereitschaft' : 'Readiness'}
+          label={t('common.readiness')}
           value={`${progress.readiness}%`}
         />
         <MetricCard
           detail={
-            isGerman
-              ? 'Als erledigt markierte Anforderungen.'
-              : 'Requirements marked as completed.'
+            t('workspacePage.checklistDetail')
           }
-          label={isGerman ? 'Checklisten-Fortschritt' : 'Checklist progress'}
+          label={t('workspacePage.checklistProgress')}
           value={`${progress.completedRequirements}/${progress.totalRequirements}`}
         />
         <MetricCard
           detail={
-            isGerman
-              ? 'In den Workspace hochgeladene Dokumente.'
-              : 'Documents uploaded to the workspace.'
+            t('workspacePage.documentsDetail')
           }
-          label={isGerman ? 'Dokumente' : 'Documents'}
+          label={t('common.documents')}
           value={`${progress.uploadedDocuments}/${progress.totalDocuments || 0}`}
         />
         <MetricCard
           detail={
-            isGerman
-              ? 'Offene Blocker, die noch gelöst werden müssen.'
-              : 'Open blockers that still need to be resolved.'
+            t('workspacePage.blockersDetail')
           }
-          label={isGerman ? 'Blocker' : 'Blockers'}
+          label={t('common.blockers')}
           value={String(progress.blockers.length)}
         />
       </div>
@@ -84,16 +72,21 @@ export function EventWorkspacePage() {
         <div className="space-y-6">
           <div className="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-panel backdrop-blur">
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700/80">
-              {isGerman ? 'Veranstaltungsübersicht' : 'Event summary'}
+              {t('workspacePage.summary')}
             </p>
             <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {[
-                [isGerman ? 'Öffentliche Fläche' : 'Public space', formatBooleanValue(event.publicSpace, language)],
-                [isGerman ? 'Musik' : 'Music', formatBooleanValue(event.music, language)],
-                [isGerman ? 'Alkohol' : 'Alcohol', formatBooleanValue(event.alcohol, language)],
-                [isGerman ? 'Stände' : 'Vendors', formatBooleanValue(event.foodVendors, language)],
-                [isGerman ? 'Förderung' : 'Funding', formatBooleanValue(event.fundingNeeded, language)],
-                [isGerman ? 'Teilnehmer' : 'Attendance', String(event.expectedAttendance)],
+                [
+                  t('workspacePage.organizer'),
+                  `${event.firstName ?? ''} ${event.lastName ?? ''}`.trim() ||
+                    t('workspacePage.noOrganizer'),
+                ],
+                [t('workspacePage.publicSpace'), formatBooleanValue(event.publicSpace, language)],
+                [t('workspacePage.music'), formatBooleanValue(event.music, language)],
+                [t('workspacePage.alcohol'), formatBooleanValue(event.alcohol, language)],
+                [t('workspacePage.vendors'), formatBooleanValue(event.foodVendors, language)],
+                [t('workspacePage.funding'), formatBooleanValue(event.fundingNeeded, language)],
+                [t('common.attendance'), String(event.expectedAttendance)],
               ].map(([label, value]) => (
                 <div
                   key={label}
@@ -112,9 +105,7 @@ export function EventWorkspacePage() {
           <DeadlineList
             items={progress.upcomingDeadlines}
             title={
-              isGerman
-                ? 'Anstehende Fristen für diese Veranstaltung'
-                : 'Upcoming deadlines for this event'
+              t('workspacePage.eventDeadlines')
             }
           />
         </div>
@@ -127,37 +118,41 @@ export function EventWorkspacePage() {
             <div className="flex items-center justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700/80">
-                  {isGerman ? 'Aktuelle Dokumente' : 'Current documents'}
+                  {t('workspacePage.currentDocuments')}
                 </p>
                 <h2 className="section-title mt-2 text-xl font-semibold text-slate-950">
-                  {isGerman ? 'Workspace-Dateien' : 'Workspace files'}
+                  {t('workspacePage.workspaceFiles')}
                 </h2>
               </div>
               <Link
                 className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-brand-300 hover:bg-brand-50"
                 to={`/events/${event.id}/documents`}
               >
-                {isGerman ? 'Verwalten' : 'Manage'}
+                {t('common.manage')}
               </Link>
             </div>
 
             <div className="mt-4 space-y-3">
               {documents.length === 0 ? (
                 <p className="text-sm text-slate-500">
-                  {isGerman ? 'Noch keine Dokumente hinzugefügt.' : 'No documents added yet.'}
+                  {t('workspacePage.noDocuments')}
                 </p>
               ) : (
-                documents.slice(0, 3).map((document) => (
-                  <div
-                    key={document.id}
-                    className="rounded-2xl border border-slate-100 bg-slate-50/80 p-4"
-                  >
-                    <p className="font-semibold text-slate-900">{document.title}</p>
-                    <p className="mt-1 text-sm text-slate-600">
-                      {document.type} · {document.status}
-                    </p>
-                  </div>
-                ))
+                documents.slice(0, 3).map((document) => {
+                  const display = getEventDocumentDisplay(document, language)
+
+                  return (
+                    <div
+                      key={document.id}
+                      className="rounded-2xl border border-slate-100 bg-slate-50/80 p-4"
+                    >
+                      <p className="font-semibold text-slate-900">{display.title}</p>
+                      <p className="mt-1 text-sm text-slate-600">
+                        {display.type} | {formatDocumentStatus(document.status, language)}
+                      </p>
+                    </div>
+                  )
+                })
               )}
             </div>
           </div>
