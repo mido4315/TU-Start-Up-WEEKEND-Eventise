@@ -454,7 +454,7 @@ export function EventWizardPage() {
           {step === 5 && (
             <div className="space-y-4">
               <p className="text-sm text-slate-600">
-                Wählen Sie benötigte Dienstleister direkt aus. Aktivieren Sie eine Kategorie und wählen Sie Ihren Anbieter.
+                {t('wizard.services.intro')}
               </p>
               {serviceCategories.map((category) => {
                 const wantedKey = `${category.key}Wanted` as keyof EventFormValues
@@ -488,7 +488,7 @@ export function EventWizardPage() {
                           ? 'border-white/30 bg-white/10 text-white'
                           : 'border-slate-200 text-slate-500'
                       }`}>
-                        {isWanted ? 'Aktiviert' : 'Nicht benötigt'}
+                        {isWanted ? t('wizard.services.active') : t('wizard.services.notNeeded')}
                       </span>
                     </button>
 
@@ -514,9 +514,13 @@ export function EventWizardPage() {
                                   provider.badge === 'empfohlen' ? 'bg-emerald-100 text-emerald-700' :
                                   'bg-slate-100 text-slate-600'
                                 }`}>
-                                  {provider.badge === 'top' ? '⭐ Top-Anbieter' :
-                                   provider.badge === 'beliebt' ? '🔥 Beliebt' :
-                                   provider.badge === 'empfohlen' ? '✓ Empfohlen' : 'Neu'}
+                                  {provider.badge === 'top'
+                                    ? t('wizard.services.badges.top')
+                                    : provider.badge === 'beliebt'
+                                      ? t('wizard.services.badges.popular')
+                                      : provider.badge === 'empfohlen'
+                                        ? t('wizard.services.badges.recommended')
+                                        : t('wizard.services.badges.new')}
                                 </span>
                               )}
 
@@ -536,7 +540,7 @@ export function EventWizardPage() {
                                   {'★'.repeat(Math.floor(provider.rating))}{'☆'.repeat(5 - Math.floor(provider.rating))}
                                 </span>
                                 <span className="text-xs text-slate-500">
-                                  {provider.rating.toFixed(1)} ({provider.reviewCount.toLocaleString('de-DE')})
+                                  {provider.rating.toFixed(1)} ({provider.reviewCount.toLocaleString(locale)})
                                 </span>
                               </div>
 
@@ -827,7 +831,9 @@ export function EventWizardPage() {
               </div>
 
               <div>
-                <p className="mb-3 text-sm font-semibold text-slate-900">Gebuchte Dienstleister</p>
+                <p className="mb-3 text-sm font-semibold text-slate-900">
+                  {t('wizard.services.bookedTitle')}
+                </p>
                 {serviceCategories.some((c) => form[`${c.key}Wanted` as keyof EventFormValues]) ? (
                   <div className="grid gap-3 md:grid-cols-2">
                     {serviceCategories
@@ -846,7 +852,9 @@ export function EventWizardPage() {
                                   <p className="text-sm text-brand-700">{provider.priceFrom}</p>
                                 </>
                               ) : (
-                                <p className="mt-1 text-sm text-slate-400 italic">Kein Anbieter gewählt</p>
+                                <p className="mt-1 text-sm text-slate-400 italic">
+                                  {t('wizard.services.noProvider')}
+                                </p>
                               )}
                             </div>
                           </div>
@@ -855,7 +863,7 @@ export function EventWizardPage() {
                   </div>
                 ) : (
                   <p className="rounded-2xl border border-slate-100 bg-slate-50/80 p-4 text-sm text-slate-500 italic">
-                    Keine Dienstleister ausgewählt.
+                    {t('wizard.services.noneSelected')}
                   </p>
                 )}
               </div>

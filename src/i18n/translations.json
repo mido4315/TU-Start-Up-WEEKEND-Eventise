@@ -229,6 +229,20 @@
           }
         }
       },
+      "services": {
+        "intro": "Wählen Sie benötigte Dienstleister direkt aus. Aktivieren Sie eine Kategorie und wählen Sie Ihren Anbieter.",
+        "active": "Aktiviert",
+        "notNeeded": "Nicht benötigt",
+        "bookedTitle": "Gebuchte Dienstleister",
+        "noProvider": "Kein Anbieter gewählt",
+        "noneSelected": "Keine Dienstleister ausgewählt.",
+        "badges": {
+          "top": "Top-Anbieter",
+          "popular": "Beliebt",
+          "recommended": "Empfohlen",
+          "new": "Neu"
+        }
+      },
       "toggles": {
         "publicVenue": ["Öffentliche Fläche", "Straßenbereich, Platz oder Park in städtischem Besitz."],
         "privateVenue": ["Private Fläche", "Vereinsgelände, Privatgrundstück oder gemietete Halle."],
@@ -571,6 +585,20 @@
             "name": "North City Community Hall",
             "detail": "Community-focused indoor and outdoor event space."
           }
+        }
+      },
+      "services": {
+        "intro": "Choose the service providers you need. Activate a category and select your preferred provider.",
+        "active": "Active",
+        "notNeeded": "Not needed",
+        "bookedTitle": "Booked service providers",
+        "noProvider": "No provider selected",
+        "noneSelected": "No service providers selected.",
+        "badges": {
+          "top": "Top provider",
+          "popular": "Popular",
+          "recommended": "Recommended",
+          "new": "New"
         }
       },
       "toggles": {
