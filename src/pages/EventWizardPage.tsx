@@ -861,6 +861,7 @@ export function EventWizardPage() {
       {mapPickerTarget && (
         <MapLocationPicker
           closeLabel={t('wizard.mapPicker.close')}
+          hideLocationList={mapPickerTarget === 'organizerAddress'}
           locations={mockLocations}
           onClose={() => setMapPickerTarget(null)}
           onSelect={(location) => {

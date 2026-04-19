@@ -10,6 +10,7 @@ interface MockLocation {
 
 interface MapLocationPickerProps {
   closeLabel: string
+  hideLocationList?: boolean
   locations: MockLocation[]
   onClose: () => void
   onSelect: (location: string) => void
@@ -32,6 +33,7 @@ const markerIcon = new L.Icon({
 
 export function MapLocationPicker({
   closeLabel,
+  hideLocationList = false,
   locations,
   onClose,
   onSelect,
@@ -61,7 +63,7 @@ export function MapLocationPicker({
           </button>
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-[1.2fr,0.8fr]">
+        <div className={`grid gap-4 ${hideLocationList ? '' : 'lg:grid-cols-[1.2fr,0.8fr]'}`}>
           <div className="min-h-[360px] overflow-hidden rounded-2xl border border-slate-200">
             <MapContainer
               center={center}
@@ -94,29 +96,31 @@ export function MapLocationPicker({
             </MapContainer>
           </div>
 
-          <div className="grid gap-2">
-            {locations.map((location) => {
-              const isSelected = selectedLocation === location.name
+          {!hideLocationList && (
+            <div className="grid gap-2">
+              {locations.map((location) => {
+                const isSelected = selectedLocation === location.name
 
-              return (
-                <button
-                  className={`rounded-2xl border p-4 text-left transition ${
-                    isSelected
-                      ? 'border-slate-950 bg-slate-950 text-white'
-                      : 'border-slate-200 bg-white text-slate-900 hover:border-brand-300 hover:bg-brand-50'
-                  }`}
-                  key={location.id}
-                  onClick={() => onSelect(location.name)}
-                  type="button"
-                >
-                  <p className="font-semibold">{location.name}</p>
-                  <p className={`mt-1 text-sm ${isSelected ? 'text-slate-200' : 'text-slate-600'}`}>
-                    {location.detail}
-                  </p>
-                </button>
-              )
-            })}
-          </div>
+                return (
+                  <button
+                    className={`rounded-2xl border p-4 text-left transition ${
+                      isSelected
+                        ? 'border-slate-950 bg-slate-950 text-white'
+                        : 'border-slate-200 bg-white text-slate-900 hover:border-brand-300 hover:bg-brand-50'
+                    }`}
+                    key={location.id}
+                    onClick={() => onSelect(location.name)}
+                    type="button"
+                  >
+                    <p className="font-semibold">{location.name}</p>
+                    <p className={`mt-1 text-sm ${isSelected ? 'text-slate-200' : 'text-slate-600'}`}>
+                      {location.detail}
+                    </p>
+                  </button>
+                )
+              })}
+            </div>
+          )}
         </div>
       </div>
     </div>
